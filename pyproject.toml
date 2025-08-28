@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "albcovis"
+version = "0.1.0"
+description = "ALBCOVIS: Album Cover Visual Feature Extraction and Metadata Aggregation"
+authors = [
+    { name = "Sergio García", email = "37sergarest@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0",           # API calls
+    "pydantic>=2.0",              # Data validation and models
+    "pydantic-settings>=2.0",     # Env var config
+    "urllib3>=2.0",               
+]
+
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
