@@ -23,7 +23,16 @@ new_mbids = [
     "2187d248-1a3b-35d0-a4ec-bead586ff547",
     "5912fc58-e625-3959-9ee1-ce359592a44f",
     "c0eb54b5-757a-452a-a248-d7dbdb39cd18",
-    "6c9c4985-3628-3070-b956-b538f30c9bea"
+    "6c9c4985-3628-3070-b956-b538f30c9bea",
+    #
+    "bce5f949-a724-3d99-895f-d1c4a2662d7d",
+    "42352def-1aab-3000-b548-895ebd869cb6",
+    "231b6ff2-b493-3f73-947e-4dc9b42c3fe0",
+    "9fb293f8-5084-36d5-aec5-f111eb462c57",
+    "fc36583b-e0a9-3a21-adf3-b1bda73fb059",
+    "ac98f1fe-9afe-39c8-be60-0f6cb2024a55",
+    "055be730-dcad-31bf-b550-45ba9c202aa3",
+    "7f4792fe-b563-4554-849a-95a89be71f84"
 ]
 
 # Create a DataFrame for them (with NaN in missing columns)
