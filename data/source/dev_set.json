@@ -15422,5 +15422,1358 @@
       "approved": true,
       "release": "https://musicbrainz.org/release/ac78a3f7-252f-332f-8d8f-a1f15564ce0b"
     }
+  },
+  {
+    "release_group_mbid": "bce5f949-a724-3d99-895f-d1c4a2662d7d",
+    "title": "Xerrox, Vol.1",
+    "type": "Album",
+    "first_release_date": "2007-03-16",
+    "artist_credit": {
+      "full_credit_name": "Alva Noto",
+      "artists": [
+        {
+          "name": "Alva Noto",
+          "artist_mbid": "48ec4bb6-47a6-4e2c-8287-7617464eb193",
+          "country": "DE",
+          "type": "Person",
+          "disambiguation": ""
+        }
+      ]
+    },
+    "external_links": {
+      "discogs": "https://www.discogs.com/master/9520",
+      "allmusic": "https://www.allmusic.com/album/mw0001144544",
+      "wikidata": "https://www.wikidata.org/wiki/Q3570934"
+    },
+    "genre_info": {
+      "genres_discogs": [
+        "Electronic"
+      ],
+      "styles_discogs": [
+        "Drone",
+        "Glitch",
+        "Minimal",
+        "Ambient"
+      ],
+      "genres_mb": [
+        "electronic",
+        "experimental"
+      ],
+      "tags_mb": [
+        "electronic",
+        "experimental"
+      ]
+    },
+    "releases": [
+      {
+        "release_mbid": "3f90182f-8d9a-4090-9000-6158f43e8817",
+        "barcode": "4260115990788",
+        "disambiguation": "",
+        "date": "2007-03-16",
+        "country": "DE",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "384c49d9-ee83-4a4f-8325-710907f9fe54",
+        "barcode": null,
+        "disambiguation": "",
+        "date": "2007-03-16",
+        "country": "DE",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "638faaad-feab-4705-b7d1-19fb7eea8a68",
+        "barcode": "5056163017725",
+        "disambiguation": "",
+        "date": "2007-03-16",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      }
+    ],
+    "cover_art": {
+      "id": "39341710398",
+      "types": [
+        "Front"
+      ],
+      "image": "https://coverartarchive.org/release/638faaad-feab-4705-b7d1-19fb7eea8a68/39341710398.jpg",
+      "thumbnails": {
+        "px_1200": "https://coverartarchive.org/release/638faaad-feab-4705-b7d1-19fb7eea8a68/39341710398-1200.jpg",
+        "px_250": "https://coverartarchive.org/release/638faaad-feab-4705-b7d1-19fb7eea8a68/39341710398-250.jpg",
+        "px_500": "https://coverartarchive.org/release/638faaad-feab-4705-b7d1-19fb7eea8a68/39341710398-500.jpg",
+        "large": "https://coverartarchive.org/release/638faaad-feab-4705-b7d1-19fb7eea8a68/39341710398-500.jpg",
+        "small": "https://coverartarchive.org/release/638faaad-feab-4705-b7d1-19fb7eea8a68/39341710398-250.jpg"
+      },
+      "approved": true,
+      "release": "https://musicbrainz.org/release/638faaad-feab-4705-b7d1-19fb7eea8a68",
+      "visual_features": null
+    }
+  },
+  {
+    "release_group_mbid": "42352def-1aab-3000-b548-895ebd869cb6",
+    "title": "Unknown Pleasures",
+    "type": "Album",
+    "first_release_date": "1979-06-15",
+    "artist_credit": {
+      "full_credit_name": "Joy Division",
+      "artists": [
+        {
+          "name": "Joy Division",
+          "artist_mbid": "9a58fda3-f4ed-4080-a3a5-f457aac9fcdd",
+          "country": "GB",
+          "type": "Group",
+          "disambiguation": ""
+        }
+      ]
+    },
+    "external_links": {
+      "discogs": "https://www.discogs.com/master/4805",
+      "allmusic": "https://www.allmusic.com/album/mw0000202764",
+      "wikidata": "https://www.wikidata.org/wiki/Q735573"
+    },
+    "genre_info": {
+      "genres_discogs": [
+        "Rock"
+      ],
+      "styles_discogs": [
+        "New Wave",
+        "Post-Punk"
+      ],
+      "genres_mb": [
+        "gothic rock",
+        "new wave",
+        "post-punk",
+        "rock"
+      ],
+      "tags_mb": [
+        "alternative and punk",
+        "factory records",
+        "gothic rock",
+        "new wave",
+        "post-punk",
+        "rock",
+        "rock pop"
+      ]
+    },
+    "releases": [
+      {
+        "release_mbid": "8a49a6c0-f5ef-3647-bf78-fa360bd3d6fb",
+        "barcode": null,
+        "disambiguation": "",
+        "date": "1979-06-15",
+        "country": "GB",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "8c7b6fd4-bd58-46dd-b747-8b67ae863aa2",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1980-07",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "76f1a023-511e-46e6-a311-45c08cc49fb7",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1980",
+        "country": "IT",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "8666f5b9-99f1-39a9-a0e9-65a727b4cc90",
+        "barcode": "5016839400107",
+        "disambiguation": "",
+        "date": "1985",
+        "country": "GB",
+        "format": [
+          "Cassette"
+        ]
+      },
+      {
+        "release_mbid": "d2f506bb-cfb5-327e-b8d6-cf4036c77cfa",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1986-04",
+        "country": "GB",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "ea46c1a0-4001-45b8-8ac8-148397c2c680",
+        "barcode": "3268440302178",
+        "disambiguation": "",
+        "date": "1986",
+        "country": "FR",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "3dd3e849-5830-429a-ac81-75054fe1d720",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1986",
+        "country": "GB",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "bf6d0b34-5b7a-3609-b5f0-4c20c9ef9714",
+        "barcode": "042283081222",
+        "disambiguation": "",
+        "date": "1987",
+        "country": "CA",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "3981f0bc-7b97-4109-a02d-675274b7c4ff",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1988",
+        "country": "DE",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "fddc5f9f-5651-4d3e-be19-654aacb0b619",
+        "barcode": "4005902106726",
+        "disambiguation": "",
+        "date": "1988",
+        "country": "DE",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "441ba7b2-1f0d-4c95-bc3a-e26cce9cb139",
+        "barcode": "4988001246237",
+        "disambiguation": "",
+        "date": "1989-02-21",
+        "country": "JP",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "83efe2a2-f6c7-379b-942f-dfa409463014",
+        "barcode": "075992584029",
+        "disambiguation": "",
+        "date": "1989-03-10",
+        "country": "US",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "4b2113df-29e1-4885-803e-04a6135bf925",
+        "barcode": "075992584029",
+        "disambiguation": "no tracklist on back",
+        "date": "1989-06",
+        "country": "US",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "6219127c-bf4a-3699-a2f0-a97e8cc88d6e",
+        "barcode": "731452001627",
+        "disambiguation": "",
+        "date": "1993-07-19",
+        "country": "DE",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "8fe5247b-6b17-4dbc-99bc-1491a1c351e0",
+        "barcode": "4988005131973",
+        "disambiguation": "",
+        "date": "1993-11-06",
+        "country": "JP",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "cb9adb70-52a2-37da-a323-e3a1377daa14",
+        "barcode": "639842822329",
+        "disambiguation": "",
+        "date": "1999",
+        "country": "GB",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "3a985fb4-009e-44e3-9e9b-24ebb7f973df",
+        "barcode": "5901844901025",
+        "disambiguation": "",
+        "date": "2000",
+        "country": "PL",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "93f2a469-1d42-3963-9de9-120d52d43bf9",
+        "barcode": "825646977895",
+        "disambiguation": "",
+        "date": "2007-09-17",
+        "country": "GB",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "fd068c5e-ad3c-3325-ae19-1e8677f860a4",
+        "barcode": "081227996017",
+        "disambiguation": "",
+        "date": "2007-09-17",
+        "country": "US",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "d6fc72f1-afc0-47dd-b7fc-2bf6d7c0dbd9",
+        "barcode": "081227339517",
+        "disambiguation": "",
+        "date": "2007-09-18",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "c619a467-2f82-4618-9cc3-d5a0ce917756",
+        "barcode": "",
+        "disambiguation": "collector’s edition",
+        "date": "2007-09-27",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "0f55dca9-b076-4fe6-a028-6e5cf85a4f92",
+        "barcode": "825646450510",
+        "disambiguation": "",
+        "date": "2013-10-20",
+        "country": "US",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "2146ca82-1502-486f-b6c0-6d04893fe200",
+        "barcode": "825646183906",
+        "disambiguation": "",
+        "date": "2015-06-29",
+        "country": "XE",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "4c777694-3802-458f-a95b-3c91b5e9edd3",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "2015",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "a2480ba5-405f-417f-ad4f-314ce36b94d0",
+        "barcode": "825646977895",
+        "disambiguation": "without slipcase",
+        "date": "2017",
+        "country": "XE",
+        "format": [
+          "CD"
+        ]
+      }
+    ],
+    "cover_art": {
+      "id": "3880053972",
+      "types": [
+        "Front"
+      ],
+      "image": "http://coverartarchive.org/release/d2f506bb-cfb5-327e-b8d6-cf4036c77cfa/3880053972.jpg",
+      "thumbnails": {
+        "px_1200": "http://coverartarchive.org/release/d2f506bb-cfb5-327e-b8d6-cf4036c77cfa/3880053972-1200.jpg",
+        "px_250": "http://coverartarchive.org/release/d2f506bb-cfb5-327e-b8d6-cf4036c77cfa/3880053972-250.jpg",
+        "px_500": "http://coverartarchive.org/release/d2f506bb-cfb5-327e-b8d6-cf4036c77cfa/3880053972-500.jpg",
+        "large": "http://coverartarchive.org/release/d2f506bb-cfb5-327e-b8d6-cf4036c77cfa/3880053972-500.jpg",
+        "small": "http://coverartarchive.org/release/d2f506bb-cfb5-327e-b8d6-cf4036c77cfa/3880053972-250.jpg"
+      },
+      "approved": true,
+      "release": "https://musicbrainz.org/release/d2f506bb-cfb5-327e-b8d6-cf4036c77cfa",
+      "visual_features": null
+    }
+  },
+  {
+    "release_group_mbid": "231b6ff2-b493-3f73-947e-4dc9b42c3fe0",
+    "title": "Hats",
+    "type": "Album",
+    "first_release_date": "1989-10-09",
+    "artist_credit": {
+      "full_credit_name": "The Blue Nile",
+      "artists": [
+        {
+          "name": "The Blue Nile",
+          "artist_mbid": "13453b40-1d9c-4281-b73f-b7c1b45c7ebd",
+          "country": "GB",
+          "type": "Group",
+          "disambiguation": ""
+        }
+      ]
+    },
+    "external_links": {
+      "discogs": "https://www.discogs.com/master/35786",
+      "allmusic": "https://www.allmusic.com/album/mw0000202646",
+      "wikidata": "https://www.wikidata.org/wiki/Q16993749"
+    },
+    "genre_info": {
+      "genres_discogs": [
+        "Pop"
+      ],
+      "styles_discogs": [
+        "New Wave",
+        "Ethereal"
+      ],
+      "genres_mb": [
+        "sophisti-pop"
+      ],
+      "tags_mb": [
+        "sophisti-pop"
+      ]
+    },
+    "releases": [
+      {
+        "release_mbid": "691a663e-adca-3f72-b3c3-4d06299f1417",
+        "barcode": "0077778647027",
+        "disambiguation": "blue disc label",
+        "date": "1989-10-09",
+        "country": "GB",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "602fc3ee-e10a-4592-a315-f474bc20ce8b",
+        "barcode": "5012981002022",
+        "disambiguation": "",
+        "date": "1989",
+        "country": "GB",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "6d7383ef-ba1f-41d8-9d95-80c9a7b92a72",
+        "barcode": "075021528413",
+        "disambiguation": "",
+        "date": "1989",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "daf83f63-9e96-49bf-9b8a-3fc1b29b3024",
+        "barcode": "075021528420",
+        "disambiguation": "",
+        "date": "1990-01-04",
+        "country": "US",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "ae463861-563f-4dd9-8a79-aa698f612d1e",
+        "barcode": "5099901730029",
+        "disambiguation": "collector’s edition",
+        "date": "2012-11-19",
+        "country": "GB",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "f44c3e62-843c-430c-ade6-8e46257e9220",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "2017-03-24",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "0fe71175-643e-4db2-b050-6fd7c4df7728",
+        "barcode": "077778647027",
+        "disambiguation": "pink disc label",
+        "date": "",
+        "country": "XE",
+        "format": [
+          "CD"
+        ]
+      }
+    ],
+    "cover_art": {
+      "id": "24961543145",
+      "types": [
+        "Front"
+      ],
+      "image": "http://coverartarchive.org/release/6d7383ef-ba1f-41d8-9d95-80c9a7b92a72/24961543145.jpg",
+      "thumbnails": {
+        "px_1200": "http://coverartarchive.org/release/6d7383ef-ba1f-41d8-9d95-80c9a7b92a72/24961543145-1200.jpg",
+        "px_250": "http://coverartarchive.org/release/6d7383ef-ba1f-41d8-9d95-80c9a7b92a72/24961543145-250.jpg",
+        "px_500": "http://coverartarchive.org/release/6d7383ef-ba1f-41d8-9d95-80c9a7b92a72/24961543145-500.jpg",
+        "large": "http://coverartarchive.org/release/6d7383ef-ba1f-41d8-9d95-80c9a7b92a72/24961543145-500.jpg",
+        "small": "http://coverartarchive.org/release/6d7383ef-ba1f-41d8-9d95-80c9a7b92a72/24961543145-250.jpg"
+      },
+      "approved": true,
+      "release": "https://musicbrainz.org/release/6d7383ef-ba1f-41d8-9d95-80c9a7b92a72",
+      "visual_features": null
+    }
+  },
+  {
+    "release_group_mbid": "9fb293f8-5084-36d5-aec5-f111eb462c57",
+    "title": "Tre",
+    "type": "Album",
+    "first_release_date": "2003-02",
+    "artist_credit": {
+      "full_credit_name": "The Dining Rooms",
+      "artists": [
+        {
+          "name": "The Dining Rooms",
+          "artist_mbid": "76fe6c77-7d7e-419b-96d1-b33d5721f6ce",
+          "country": "IT",
+          "type": "Group",
+          "disambiguation": ""
+        }
+      ]
+    },
+    "external_links": {
+      "discogs": "https://www.discogs.com/master/123001",
+      "allmusic": "https://www.allmusic.com/album/mw0000030365",
+      "wikidata": null
+    },
+    "genre_info": {
+      "genres_discogs": [
+        "Electronic"
+      ],
+      "styles_discogs": [
+        "Future Jazz",
+        "Downtempo"
+      ],
+      "genres_mb": [
+        "electronic"
+      ],
+      "tags_mb": [
+        "electronic"
+      ]
+    },
+    "releases": [
+      {
+        "release_mbid": "c2ada8dd-4f70-4ee8-8cd2-44f1e42f1b92",
+        "barcode": "8018344013558",
+        "disambiguation": "",
+        "date": "2003-02",
+        "country": "IT",
+        "format": [
+          "Enhanced CD"
+        ]
+      }
+    ],
+    "cover_art": {
+      "id": "23776122656",
+      "types": [
+        "Front"
+      ],
+      "image": "https://coverartarchive.org/release/c2ada8dd-4f70-4ee8-8cd2-44f1e42f1b92/23776122656.jpg",
+      "thumbnails": {
+        "px_1200": "https://coverartarchive.org/release/c2ada8dd-4f70-4ee8-8cd2-44f1e42f1b92/23776122656-1200.jpg",
+        "px_250": "https://coverartarchive.org/release/c2ada8dd-4f70-4ee8-8cd2-44f1e42f1b92/23776122656-250.jpg",
+        "px_500": "https://coverartarchive.org/release/c2ada8dd-4f70-4ee8-8cd2-44f1e42f1b92/23776122656-500.jpg",
+        "large": "https://coverartarchive.org/release/c2ada8dd-4f70-4ee8-8cd2-44f1e42f1b92/23776122656-500.jpg",
+        "small": "https://coverartarchive.org/release/c2ada8dd-4f70-4ee8-8cd2-44f1e42f1b92/23776122656-250.jpg"
+      },
+      "approved": true,
+      "release": "https://musicbrainz.org/release/c2ada8dd-4f70-4ee8-8cd2-44f1e42f1b92",
+      "visual_features": null
+    }
+  },
+  {
+    "release_group_mbid": "fc36583b-e0a9-3a21-adf3-b1bda73fb059",
+    "title": "The Richest Man in Babylon",
+    "type": "Album",
+    "first_release_date": "2002-09-17",
+    "artist_credit": {
+      "full_credit_name": "Thievery Corporation",
+      "artists": [
+        {
+          "name": "Thievery Corporation",
+          "artist_mbid": "a505bb48-ad65-4af4-ae47-29149715bff9",
+          "country": "US",
+          "type": "Group",
+          "disambiguation": ""
+        }
+      ]
+    },
+    "external_links": {
+      "discogs": "https://www.discogs.com/master/10198",
+      "allmusic": "https://www.allmusic.com/album/mw0000662275",
+      "wikidata": "https://www.wikidata.org/wiki/Q718635"
+    },
+    "genre_info": {
+      "genres_discogs": [
+        "Electronic"
+      ],
+      "styles_discogs": [
+        "Downtempo"
+      ],
+      "genres_mb": [
+        "downtempo",
+        "dub",
+        "electronic",
+        "electronica",
+        "lounge",
+        "trip hop"
+      ],
+      "tags_mb": [
+        "ambient breakbeat",
+        "downbeat",
+        "downtempo",
+        "dub",
+        "electronic",
+        "electronica",
+        "lounge",
+        "trip hop",
+        "trip-hop"
+      ]
+    },
+    "releases": [
+      {
+        "release_mbid": "b2a820cc-c0ad-4aa3-a2a7-ed42ead88017",
+        "barcode": null,
+        "disambiguation": "",
+        "date": "2002-09-17",
+        "country": "DE",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "fbe74643-ab7a-31fa-82f1-e88f7825ff70",
+        "barcode": "795103006027",
+        "disambiguation": "",
+        "date": "2002-10-01",
+        "country": "US",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "a43ea649-a156-35f7-b807-a6e72f9b2e34",
+        "barcode": "044006519326",
+        "disambiguation": "",
+        "date": "2002",
+        "country": "FR",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "80efc10b-72b0-48a0-9ed9-c3d94c39b8e6",
+        "barcode": "795103006027",
+        "disambiguation": "",
+        "date": "2002",
+        "country": "US",
+        "format": [
+          "Enhanced CD"
+        ]
+      },
+      {
+        "release_mbid": "8ed815b7-e28c-4019-b7ba-1eb25bb2b290",
+        "barcode": "887158874819",
+        "disambiguation": "",
+        "date": "2014-09-30",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "8c672f72-3097-43d7-8960-dd5e2bf341f2",
+        "barcode": "792755854150",
+        "disambiguation": "",
+        "date": "",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      }
+    ],
+    "cover_art": {
+      "id": "1766939079",
+      "types": [
+        "Front"
+      ],
+      "image": "http://coverartarchive.org/release/b2a820cc-c0ad-4aa3-a2a7-ed42ead88017/1766939079.jpg",
+      "thumbnails": {
+        "px_1200": null,
+        "px_250": null,
+        "px_500": null,
+        "large": "http://coverartarchive.org/release/b2a820cc-c0ad-4aa3-a2a7-ed42ead88017/1766939079-500.jpg",
+        "small": "http://coverartarchive.org/release/b2a820cc-c0ad-4aa3-a2a7-ed42ead88017/1766939079-250.jpg"
+      },
+      "approved": true,
+      "release": "http://musicbrainz.org/release/b2a820cc-c0ad-4aa3-a2a7-ed42ead88017",
+      "visual_features": null
+    }
+  },
+  {
+    "release_group_mbid": "ac98f1fe-9afe-39c8-be60-0f6cb2024a55",
+    "title": "Amor amarillo",
+    "type": "Album",
+    "first_release_date": "1993-11-01",
+    "artist_credit": {
+      "full_credit_name": "Gustavo Cerati",
+      "artists": [
+        {
+          "name": "Gustavo Cerati",
+          "artist_mbid": "979d01bc-a4da-4c80-8cc1-be40bd35cd5e",
+          "country": "AR",
+          "type": "Person",
+          "disambiguation": ""
+        }
+      ]
+    },
+    "external_links": {
+      "discogs": "https://www.discogs.com/master/410493",
+      "allmusic": "https://www.allmusic.com/album/mw0000112369",
+      "wikidata": "https://www.wikidata.org/wiki/Q4747591"
+    },
+    "genre_info": {
+      "genres_discogs": [
+        "Electronic",
+        "Rock",
+        "Pop"
+      ],
+      "styles_discogs": [
+        "Dream Pop",
+        "House",
+        "Alternative Rock",
+        "Pop Rock"
+      ],
+      "genres_mb": [
+        "dream pop",
+        "rock"
+      ],
+      "tags_mb": [
+        "dream pop",
+        "rock"
+      ]
+    },
+    "releases": [
+      {
+        "release_mbid": "c8c0deac-a8e2-410a-843e-91a494392f4e",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1993-11-01",
+        "country": "AR",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "08befe75-b00c-42ca-b9a1-f48ffb56fe96",
+        "barcode": null,
+        "disambiguation": "",
+        "date": "1994",
+        "country": "AR",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "931e4737-f1a6-46dd-87ba-6bc1580837cc",
+        "barcode": "743211739122",
+        "disambiguation": "",
+        "date": "1999",
+        "country": "AR",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "4512e57a-60c7-4099-9757-001745d9b461",
+        "barcode": "888751012318",
+        "disambiguation": "",
+        "date": "2015-12-21",
+        "country": "AR",
+        "format": [
+          "12\" Vinyl"
+        ]
+      }
+    ],
+    "cover_art": {
+      "id": "17519297659",
+      "types": [
+        "Front"
+      ],
+      "image": "http://coverartarchive.org/release/c8c0deac-a8e2-410a-843e-91a494392f4e/17519297659.jpg",
+      "thumbnails": {
+        "px_1200": "http://coverartarchive.org/release/c8c0deac-a8e2-410a-843e-91a494392f4e/17519297659-1200.jpg",
+        "px_250": "http://coverartarchive.org/release/c8c0deac-a8e2-410a-843e-91a494392f4e/17519297659-250.jpg",
+        "px_500": "http://coverartarchive.org/release/c8c0deac-a8e2-410a-843e-91a494392f4e/17519297659-500.jpg",
+        "large": "http://coverartarchive.org/release/c8c0deac-a8e2-410a-843e-91a494392f4e/17519297659-500.jpg",
+        "small": "http://coverartarchive.org/release/c8c0deac-a8e2-410a-843e-91a494392f4e/17519297659-250.jpg"
+      },
+      "approved": true,
+      "release": "https://musicbrainz.org/release/c8c0deac-a8e2-410a-843e-91a494392f4e",
+      "visual_features": null
+    }
+  },
+  {
+    "release_group_mbid": "055be730-dcad-31bf-b550-45ba9c202aa3",
+    "title": "The Beatles",
+    "type": "Album",
+    "first_release_date": "1968-11-22",
+    "artist_credit": {
+      "full_credit_name": "The Beatles",
+      "artists": [
+        {
+          "name": "The Beatles",
+          "artist_mbid": "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+          "country": "GB",
+          "type": "Group",
+          "disambiguation": "UK rock band, “The Fab Four”"
+        }
+      ]
+    },
+    "external_links": {
+      "discogs": "https://www.discogs.com/master/46402",
+      "allmusic": "https://www.allmusic.com/album/mw0000418113",
+      "wikidata": "https://www.wikidata.org/wiki/Q3295515"
+    },
+    "genre_info": {
+      "genres_discogs": [
+        "Rock"
+      ],
+      "styles_discogs": [
+        "Pop Rock",
+        "Experimental"
+      ],
+      "genres_mb": [
+        "art rock",
+        "blues rock",
+        "experimental",
+        "folk rock",
+        "hard rock",
+        "pop",
+        "pop rock",
+        "psychedelic",
+        "rock"
+      ],
+      "tags_mb": [
+        "60s",
+        "album rock",
+        "am pop",
+        "art rock",
+        "bittersweet",
+        "blues rock",
+        "british invasion rock",
+        "british psychedelia",
+        "dense",
+        "double album",
+        "eclectic",
+        "energetic",
+        "experimental",
+        "folk rock",
+        "great album cover",
+        "hard rock",
+        "humorous",
+        "introspective",
+        "love",
+        "male vocalist",
+        "melodic",
+        "playful",
+        "pop",
+        "pop rock",
+        "psychedelic",
+        "quirky",
+        "raw",
+        "rebellious",
+        "rock",
+        "sarcastic",
+        "surreal"
+      ]
+    },
+    "releases": [
+      {
+        "release_mbid": "034e0c73-c2df-328b-861c-3db28217aeed",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1968-11-22",
+        "country": "CA",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "a882c9f9-b920-30ad-8cd0-3ea2d6fedd60",
+        "barcode": "",
+        "disambiguation": "stereo",
+        "date": "1968-11-22",
+        "country": "GB",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "d6213baf-e959-4817-9fa2-3ce97f131678",
+        "barcode": "",
+        "disambiguation": "mono",
+        "date": "1968-11-22",
+        "country": "GB",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "ad53508f-dbac-4a1f-aee6-27689f3fca6e",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1974",
+        "country": "CA",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "c4ed21c3-9ecd-405d-b82e-24c73c194f8e",
+        "barcode": "",
+        "disambiguation": "stereo",
+        "date": "1976-06-05",
+        "country": "JP",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "090993ca-2d28-4b38-ae64-2eb4b20f6fab",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1976",
+        "country": "FR",
+        "format": [
+          "Cassette"
+        ]
+      },
+      {
+        "release_mbid": "306a7445-8818-495c-bdde-2b8f2808c9a1",
+        "barcode": "",
+        "disambiguation": "titles on record labels centred, capitol in beige lettering",
+        "date": "1976",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "541d4a84-f9f7-4969-8c28-ac89ca8e16c1",
+        "barcode": "",
+        "disambiguation": "titles on record label oriented to the left, Capitol in green lettering",
+        "date": "1976",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "779fc044-fb72-4b0a-8d27-b779ef400663",
+        "barcode": null,
+        "disambiguation": "White vinyl reissue",
+        "date": "1978-09-29",
+        "country": "GB",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "0192f2be-245e-4cca-948c-eca7697d688d",
+        "barcode": "",
+        "disambiguation": "White Vinyl",
+        "date": "1978",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "1a86b7a1-3162-36e8-9b74-8fd4c7b8683e",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1979",
+        "country": "DE",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "23e2e62e-dae9-4870-9eb2-af77b9d6bfad",
+        "barcode": "",
+        "disambiguation": "mono, red vinyl",
+        "date": "1982-01-21",
+        "country": "JP",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "b80b4b62-c6da-4d62-8399-fd868547a2b9",
+        "barcode": "",
+        "disambiguation": "Both LPs are translucent (hold it up to a bright light and you can see through it).",
+        "date": "1982-01",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "ff0d1beb-cdaa-48d2-966c-acbd8aca7aac",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1982-01",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "0a4e95ce-c9b8-4ff1-91d2-2a0eaf3ef896",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1982-10",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "c75d2647-f2cb-4470-8eb3-16ea25238104",
+        "barcode": null,
+        "disambiguation": "",
+        "date": "1983",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "95ab02e8-5c13-49dd-9a59-497457cdca88",
+        "barcode": "4988006615748",
+        "disambiguation": "",
+        "date": "1987-08-24",
+        "country": "JP",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "280bffe4-a8f1-4d9b-abf2-205e0ab936a5",
+        "barcode": "4988006615748",
+        "disambiguation": "The Beatles 25th anniversary",
+        "date": "1987-08-24",
+        "country": "JP",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "cc4db5e2-f89a-4958-a409-e419e862f603",
+        "barcode": "077774644389",
+        "disambiguation": "individually numbered",
+        "date": "1987-08-24",
+        "country": "GB",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "bdc5249f-e041-33ab-910d-2c26d55bc091",
+        "barcode": "",
+        "disambiguation": "",
+        "date": "1987-08-25",
+        "country": "US",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "8247cf92-b077-381d-a6a9-bcbc6fb18537",
+        "barcode": "077774644327",
+        "disambiguation": "",
+        "date": "1987",
+        "country": "CA",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "661e6f49-6900-44d4-b580-620008f7d9c1",
+        "barcode": "077774644310",
+        "disambiguation": "",
+        "date": "1987",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      },
+      {
+        "release_mbid": "a328ea88-5622-48e0-b019-94fa13a2646f",
+        "barcode": "077774644389",
+        "disambiguation": "EMI SWINDON",
+        "date": "1993",
+        "country": "XE",
+        "format": [
+          "CD"
+        ]
+      }
+    ],
+    "cover_art": {
+      "id": "4924862361",
+      "types": [
+        "Front"
+      ],
+      "image": "http://coverartarchive.org/release/034e0c73-c2df-328b-861c-3db28217aeed/4924862361.jpg",
+      "thumbnails": {
+        "px_1200": null,
+        "px_250": null,
+        "px_500": null,
+        "large": "http://coverartarchive.org/release/034e0c73-c2df-328b-861c-3db28217aeed/4924862361-500.jpg",
+        "small": "http://coverartarchive.org/release/034e0c73-c2df-328b-861c-3db28217aeed/4924862361-250.jpg"
+      },
+      "approved": true,
+      "release": "http://musicbrainz.org/release/034e0c73-c2df-328b-861c-3db28217aeed",
+      "visual_features": null
+    }
+  },
+  {
+    "release_group_mbid": "7f4792fe-b563-4554-849a-95a89be71f84",
+    "title": "Donda",
+    "type": "Album",
+    "first_release_date": "2021-07-23",
+    "artist_credit": {
+      "full_credit_name": "Kanye West",
+      "artists": [
+        {
+          "name": "Kanye West",
+          "artist_mbid": "164f0d73-1234-4e2c-8743-d77bf2191051",
+          "country": "US",
+          "type": "Person",
+          "disambiguation": "formerly Kanye West"
+        }
+      ]
+    },
+    "external_links": {
+      "discogs": "https://www.discogs.com/master/2275909",
+      "allmusic": "https://www.allmusic.com/album/mw0003560076",
+      "wikidata": "https://www.wikidata.org/wiki/Q85771140"
+    },
+    "genre_info": {
+      "genres_discogs": [
+        "Hip Hop",
+        "Funk / Soul",
+        "Pop"
+      ],
+      "styles_discogs": [
+        "Abstract",
+        "Religious",
+        "Pop Rap",
+        "Contemporary R&B"
+      ],
+      "genres_mb": [
+        "hip hop"
+      ],
+      "tags_mb": [
+        "1–9 wochen",
+        "english",
+        "hip hop",
+        "offizielle charts",
+        "rap"
+      ]
+    },
+    "releases": [
+      {
+        "release_mbid": "ae190b5a-6ede-4e0d-bb6b-2ca387d8716b",
+        "barcode": "00602438975501",
+        "disambiguation": "updated version",
+        "date": "2021-09-28",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "4fe35510-4695-4c62-9901-43a31193fd46",
+        "barcode": "00602438975518",
+        "disambiguation": "updated version",
+        "date": "2021-09-28",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "808493ce-4e02-4e01-b249-1c37de9d015c",
+        "barcode": "00602438975525",
+        "disambiguation": "updated version",
+        "date": "2021-09-28",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "9ccd7896-5c59-4aca-92e4-7f4242552f67",
+        "barcode": "00602438975563",
+        "disambiguation": "updated version",
+        "date": "2021-09-28",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "c805bfdf-5d8d-493b-b089-da144c2da00e",
+        "barcode": null,
+        "disambiguation": "Stem Player version",
+        "date": "2021-10-26",
+        "country": "GB",
+        "format": [
+          "Other"
+        ]
+      },
+      {
+        "release_mbid": "23883c62-18b7-407b-a8d1-2c66cb58fb7a",
+        "barcode": "00602445249817",
+        "disambiguation": "deluxe",
+        "date": "2021-11-14",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "c3947e5b-8c83-4110-8439-0384c13adf35",
+        "barcode": "00602445249824",
+        "disambiguation": "deluxe",
+        "date": "2021-11-14",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "8052a9d4-3d20-4f66-a94b-cc9d8cbc437a",
+        "barcode": "00602445249831",
+        "disambiguation": "deluxe",
+        "date": "2021-11-14",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "05230775-7f56-47da-a487-0572150ffdf1",
+        "barcode": "00602445249848",
+        "disambiguation": "deluxe",
+        "date": "2021-11-14",
+        "country": "XW",
+        "format": [
+          "Digital Media"
+        ]
+      },
+      {
+        "release_mbid": "1b0567d1-9475-4607-8cfe-49cf3f51da7c",
+        "barcode": "602508643385",
+        "disambiguation": "deluxe",
+        "date": "2022-02-11",
+        "country": "AU",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "65767812-ccb3-40f1-af9b-fb5d04419107",
+        "barcode": "602508643385",
+        "disambiguation": "deluxe",
+        "date": "2022-02-11",
+        "country": "XE",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "443be500-ea4c-4398-a22f-b47486ba2dd0",
+        "barcode": "602508643385",
+        "disambiguation": "deluxe",
+        "date": "2022-02-11",
+        "country": "US",
+        "format": [
+          "CD"
+        ]
+      },
+      {
+        "release_mbid": "786f7bee-1985-449c-bf5e-d77804655314",
+        "barcode": "602508643378",
+        "disambiguation": "deluxe",
+        "date": "2022-06-24",
+        "country": "US",
+        "format": [
+          "12\" Vinyl"
+        ]
+      }
+    ],
+    "cover_art": {
+      "id": "30944412549",
+      "types": [
+        "Front"
+      ],
+      "image": "http://coverartarchive.org/release/8052a9d4-3d20-4f66-a94b-cc9d8cbc437a/30944412549.jpg",
+      "thumbnails": {
+        "px_1200": "http://coverartarchive.org/release/8052a9d4-3d20-4f66-a94b-cc9d8cbc437a/30944412549-1200.jpg",
+        "px_250": "http://coverartarchive.org/release/8052a9d4-3d20-4f66-a94b-cc9d8cbc437a/30944412549-250.jpg",
+        "px_500": "http://coverartarchive.org/release/8052a9d4-3d20-4f66-a94b-cc9d8cbc437a/30944412549-500.jpg",
+        "large": "http://coverartarchive.org/release/8052a9d4-3d20-4f66-a94b-cc9d8cbc437a/30944412549-500.jpg",
+        "small": "http://coverartarchive.org/release/8052a9d4-3d20-4f66-a94b-cc9d8cbc437a/30944412549-250.jpg"
+      },
+      "approved": true,
+      "release": "https://musicbrainz.org/release/8052a9d4-3d20-4f66-a94b-cc9d8cbc437a",
+      "visual_features": null
+    }
   }
 ]
