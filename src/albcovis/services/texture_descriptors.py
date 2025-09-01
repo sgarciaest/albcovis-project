@@ -263,3 +263,82 @@ def compute_entropy_gray(gray01: np.ndarray, nbins: int = 256) -> float:
     H_norm = H / np.log2(nbins)
     
     return float(H_norm)
+
+# ---------------------------------- GLCM features (Haralick descriptors) ------------------------------------------
+import numpy as np
+from skimage import util
+from skimage.feature import graycomatrix, graycoprops
+
+# Helper to quantize grayscale to a fixed number of levels (for efficiency)
+def quantize_gray_levels(gray01: np.ndarray, levels: int = 32) -> np.ndarray:
+    """
+    Quantize a grayscale float image in [0,1] to integer levels in [0, levels-1].
+    Returns uint8 (or uint16 if levels > 256) as required by graycomatrix.
+    """
+    gray01 = np.clip(gray01, 0.0, 1.0).astype(np.float32)
+    # Map [0,1] -> {0, 1, ..., levels-1}
+    q = np.floor(gray01 * levels).astype(np.int32)
+    q[q == levels] = levels - 1  # handle edge-case where gray01==1.0
+    # Choose dtype that fits 'levels'
+    if levels <= 256:
+        return q.astype(np.uint8)
+    elif levels <= 65536:
+        return q.astype(np.uint16)
+    else:
+        raise ValueError("levels too large for skimage.graycomatrix.")
+
+# Main function to compute selected Haralick (GLCM) features
+def compute_glcm_features(
+    gray01: np.ndarray,
+    levels: int = 32,
+    distances=(1, 2, 4),
+    angles=(0.0, np.pi/4, np.pi/2, 3*np.pi/4),
+    symmetric: bool = True,
+    normed: bool = True,
+) -> dict:
+    """
+    Compute a concise, complementary set of GLCM (Haralick) features using scikit-image.
+
+    Args:
+        gray01: Grayscale float image in [0,1].
+        levels: Number of gray levels for quantization (typical: 16–64; default 32).
+        distances: Pixel offsets for GLCM.
+        angles: Directions (radians) for GLCM (0, 45, 90, 135 degrees).
+        symmetric: Make GLCM symmetric (recommended).
+        normed: Normalize GLCM to probabilities (recommended).
+
+    Returns:
+        dict with mean values over all (distance, angle) combinations for:
+        - glcm_contrast
+        - glcm_homogeneity
+        - glcm_asm
+        - glcm_correlation
+    """
+
+    # 1) Quantize to discrete gray levels required by GLCM
+    q = quantize_gray_levels(gray01, levels=levels)
+
+    # 2) Build the GLCM matriox: shape (levels, levels, len(distances), len(angles))
+    glcm = graycomatrix(
+        q,
+        distances=distances,
+        angles=angles,
+        levels=levels,
+        symmetric=symmetric,
+        normed=normed,
+    )
+
+    # 3) Compute properties. graycoprops returns array with shape (len(distances), len(angles))
+    def _prop_mean(name: str) -> float:
+        arr = graycoprops(glcm, prop=name)  # shape (D, A)
+        # graycoprops('correlation') can return NaN for constant images (zero variance).
+        arr = np.nan_to_num(arr, nan=1.0)  # treat constant-image correlation as perfectly predictable
+        return float(arr.mean())
+
+    return {
+        "glcm_contrast": _prop_mean("contrast"),
+        "glcm_homogeneity": _prop_mean("homogeneity"),
+        "glcm_energy": _prop_mean("energy"),
+        "glcm_correlation": _prop_mean("correlation"),
+        "glcm_entropy": _prop_mean("entropy")        
+    }
