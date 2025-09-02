@@ -5,6 +5,10 @@ from PIL import Image
 from skimage import color, filters, feature, util
 from scipy import ndimage as ndi
 
+# from skimage.feature import graycomatrix, graycoprops
+
+# from skimage.feature import local_binary_pattern
+
 
 # -------------------------------- Edge density & Orientation entropy -----------------------------------
 
@@ -188,8 +192,6 @@ def compute_sobel_gradients(gray01: np.ndarray) -> Tuple[np.ndarray, np.ndarray,
     mag = np.hypot(gx, gy).astype(np.float32)
     return gx, gy, mag
 
-
-
 def edge_density(edges: np.ndarray) -> float:
     """
     Fraction of pixels that are edges.
@@ -265,9 +267,6 @@ def compute_entropy_gray(gray01: np.ndarray, nbins: int = 256) -> float:
     return float(H_norm)
 
 # ---------------------------------- GLCM features (Haralick descriptors) ------------------------------------------
-import numpy as np
-from skimage import util
-from skimage.feature import graycomatrix, graycoprops
 
 # Helper to quantize grayscale to a fixed number of levels (for efficiency)
 def quantize_gray_levels(gray01: np.ndarray, levels: int = 32) -> np.ndarray:
@@ -319,7 +318,7 @@ def compute_glcm_features(
     q = quantize_gray_levels(gray01, levels=levels)
 
     # 2) Build the GLCM matriox: shape (levels, levels, len(distances), len(angles))
-    glcm = graycomatrix(
+    glcm = feature.graycomatrix(
         q,
         distances=distances,
         angles=angles,
@@ -330,7 +329,7 @@ def compute_glcm_features(
 
     # 3) Compute properties. graycoprops returns array with shape (len(distances), len(angles))
     def _prop_mean(name: str) -> float:
-        arr = graycoprops(glcm, prop=name)  # shape (D, A)
+        arr = feature.graycoprops(glcm, prop=name)  # shape (D, A)
         # graycoprops('correlation') can return NaN for constant images (zero variance).
         arr = np.nan_to_num(arr, nan=1.0)  # treat constant-image correlation as perfectly predictable
         return float(arr.mean())
@@ -341,4 +340,65 @@ def compute_glcm_features(
         "glcm_energy": _prop_mean("energy"),
         "glcm_correlation": _prop_mean("correlation"),
         "glcm_entropy": _prop_mean("entropy")        
+    }
+
+# ---------------------------------- Local Binary Patterns ------------------------------------------
+
+def compute_lbp_features(
+    gray01: np.ndarray,
+    P: int = 8,
+    R: float = 1.0,
+    method: str = "uniform",
+) -> dict:
+    """
+    Compute Local Binary Patterns (LBP) on a grayscale float image in [0,1]
+    and return two histogram-based descriptors:
+      - lbp_entropy: Shannon entropy of the LBP histogram, normalized to [0,1]
+      - lbp_energy:  Sum of squared bin probabilities, in [0,1]
+
+    Args:
+        gray01: Grayscale image as float32/float64 in [0,1].
+        P:     Number of circularly symmetric neighbor set points.
+        R:     Radius of circle.
+        method: 'uniform' (recommended), 'default', 'ror', etc. (skimage options)
+
+    Returns:
+        dict with:
+          {
+            "lbp_entropy": float in [0,1],
+            "lbp_energy":  float in [0,1]
+          }
+    """
+    # 1) Compute LBP code image
+    lbp = feature.local_binary_pattern(gray01, P=P, R=R, method=method)
+
+    # 2) Build normalized histogram over LBP codes
+    # For 'uniform': number of possible output bins is P + 2
+    if method == "uniform":
+        n_bins = P + 2
+    else:
+        # Fallback: determine bins from data (ceil to int range). This keeps things robust
+        # but note: 'uniform' is strongly recommended for stable dimensionality.
+        n_bins = int(lbp.max() + 1)
+
+    hist, _ = np.histogram(lbp, bins=np.arange(n_bins + 1), range=(0, n_bins))
+    p = hist.astype(np.float64)
+    total = p.sum()
+    if total == 0:
+        # Degenerate case (empty image). Return zeros.
+        return {"lbp_entropy": 0.0, "lbp_energy": 0.0}
+    p /= total
+
+    # 3) LBP histogram entropy (normalized to [0,1])
+    p_nz = p[p > 0]
+    H = -(p_nz * np.log2(p_nz)).sum()
+    H_max = np.log2(n_bins) if n_bins > 1 else 1.0  # avoid /0 when n_bins==1
+    lbp_entropy = float(H / H_max)
+
+    # 4) LBP histogram energy (sum of squares) in [0,1]
+    lbp_energy = float((p * p).sum())
+
+    return {
+        "lbp_entropy": lbp_entropy,
+        "lbp_energy": lbp_energy,
     }
