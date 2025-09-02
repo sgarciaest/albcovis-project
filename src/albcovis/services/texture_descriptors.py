@@ -5,9 +5,40 @@ from PIL import Image
 from skimage import color, filters, feature, util
 from scipy import ndimage as ndi
 
-# from skimage.feature import graycomatrix, graycoprops
+# ----------------------------- Entropy utility (base-2, normalized) -----------------------------
 
-# from skimage.feature import local_binary_pattern
+def shannon_entropy_norm(p: np.ndarray, nbins: int) -> float:
+    """
+    Shannon entropy with log base 2, normalized to [0,1].
+
+    Args:
+        p: 1D or ND array of nonnegative values representing either probabilities or counts.
+           (Zeros are allowed; they contribute 0 to the sum.)
+        nbins: The intended number of categories/bins.
+
+    Returns:
+        H_norm in [0,1] where 0 means perfectly concentrated (one bin has prob=1),
+        and 1 means perfectly uniform over 'nbins' bins.
+    """
+    q = np.asarray(p, dtype=np.float64).ravel()
+    s = q.sum()
+    if s <= 0 or not np.isfinite(s):
+        return 0.0
+
+    # Convert counts -> probabilities (safe even if already probs)
+    q = q / s
+
+    # Compute H = -sum p log2 p (ignoring p==0 to avoid log2(0))
+    mask = q > 0
+    H = -(q[mask] * np.log2(q[mask])).sum()
+
+    # Normalize by the maximum possible entropy for 'nbins' categories: log2(nbins)
+    if nbins <= 1:
+        return 0.0
+    H_norm = H / np.log2(float(nbins))
+    # Numerical safety
+    return float(np.clip(H_norm, 0.0, 1.0))
+
 
 
 # -------------------------------- Edge density & Orientation entropy -----------------------------------
@@ -230,13 +261,11 @@ def orientation_entropy_from_sobel(gx: np.ndarray, gy: np.ndarray, mag: np.ndarr
         range=(0.0, np.pi),
         weights=mag[mask].astype(np.float64)  # weights must be float64 for np.histogram
     )
-    # Normalize to probabilities
-    p = weighted_hist / (weighted_hist.sum() + eps)
-    # Shannon entropy (base 2)
-    entropy = -(p[p > 0] * np.log2(p[p > 0])).sum()
-    # Normalize to [0,1]
-    entropy_norm = float(entropy / np.log2(nbins))
-    return entropy_norm
+
+    # # Normalize to probabilities
+    # p = weighted_hist / (weighted_hist.sum() + eps)
+
+    return shannon_entropy_norm(weighted_hist, nbins=nbins)
 
 # ---------------------------------- Pixel intensity entropy ------------------------------------------
 
@@ -254,22 +283,16 @@ def compute_entropy_gray(gray01: np.ndarray, nbins: int = 256) -> float:
     # 1) Compute histogram
     hist, _ = np.histogram(gray01, bins=nbins, range=(0.0, 1.0))
     
-    # 2) Normalize to probabilities
-    p = hist.astype(np.float64) / hist.sum()
+    # # 2) Normalize to probabilities
+    # p = hist.astype(np.float64) / hist.sum()
     
-    # 3) Compute Shannon entropy (ignoring zero probabilities)
-    p_nonzero = p[p > 0]
-    H = -(p_nonzero * np.log2(p_nonzero)).sum()
-    
-    # 4) Normalize by maximum possible entropy (log2(nbins))
-    H_norm = H / np.log2(nbins)
-    
-    return float(H_norm)
+    # return Shannon entropy
+    return shannon_entropy_norm(hist, nbins)
 
 # ---------------------------------- GLCM features (Haralick descriptors) ------------------------------------------
 
 # Helper to quantize grayscale to a fixed number of levels (for efficiency)
-def quantize_gray_levels(gray01: np.ndarray, levels: int = 32) -> np.ndarray:
+def _quantize_gray_levels(gray01: np.ndarray, levels: int = 32) -> np.ndarray:
     """
     Quantize a grayscale float image in [0,1] to integer levels in [0, levels-1].
     Returns uint8 (or uint16 if levels > 256) as required by graycomatrix.
@@ -286,6 +309,21 @@ def quantize_gray_levels(gray01: np.ndarray, levels: int = 32) -> np.ndarray:
     else:
         raise ValueError("levels too large for skimage.graycomatrix.")
 
+def _glcm_entropy_norm2(glcm: np.ndarray, levels: int) -> float:
+    """
+    glcm: (levels, levels, D, A), with normed=True so each P sums to 1.
+    Returns mean normalized entropy (base-2) across all (D,A).
+    """
+    D, A = glcm.shape[2], glcm.shape[3]
+    ent = []
+    nbins = levels * levels
+    for d in range(D):
+        for a in range(A):
+            P = glcm[:, :, d, a]
+            ent.append(shannon_entropy_norm(P, nbins=nbins))
+    return float(np.mean(ent)) if ent else 0.0
+
+
 # Main function to compute selected Haralick (GLCM) features
 def compute_glcm_features(
     gray01: np.ndarray,
@@ -296,7 +334,8 @@ def compute_glcm_features(
     normed: bool = True,
 ) -> dict:
     """
-    Compute a concise, complementary set of GLCM (Haralick) features using scikit-image.
+    Compute GLCM features and provide normalized [0,1] variants for
+    contrast, correlation, and entropy (the rest are already in [0,1]).
 
     Args:
         gray01: Grayscale float image in [0,1].
@@ -306,16 +345,12 @@ def compute_glcm_features(
         symmetric: Make GLCM symmetric (recommended).
         normed: Normalize GLCM to probabilities (recommended).
 
-    Returns:
-        dict with mean values over all (distance, angle) combinations for:
-        - glcm_contrast
-        - glcm_homogeneity
-        - glcm_asm
-        - glcm_correlation
+    Returns keys:
+      - glcm_contrast, glcm_homogeneity, glcm_energy, glcm_correlation, glcm_entropy, glcm_contrast_norm, glcm_correlation_norm, glcm_entropy_norm
+      - All returned metrics are returned in [0,1]
     """
-
     # 1) Quantize to discrete gray levels required by GLCM
-    q = quantize_gray_levels(gray01, levels=levels)
+    q = _quantize_gray_levels(gray01, levels=levels)
 
     # 2) Build the GLCM matriox: shape (levels, levels, len(distances), len(angles))
     glcm = feature.graycomatrix(
@@ -327,19 +362,35 @@ def compute_glcm_features(
         normed=normed,
     )
 
-    # 3) Compute properties. graycoprops returns array with shape (len(distances), len(angles))
+    # Mean over all (distance, angle) combinations
     def _prop_mean(name: str) -> float:
         arr = feature.graycoprops(glcm, prop=name)  # shape (D, A)
-        # graycoprops('correlation') can return NaN for constant images (zero variance).
-        arr = np.nan_to_num(arr, nan=1.0)  # treat constant-image correlation as perfectly predictable
+        if name == "correlation":
+            # correlation can be NaN for constant images (zero variance)
+            arr = np.nan_to_num(arr, nan=1.0)
         return float(arr.mean())
 
+    contrast      = _prop_mean("contrast")     # in [0, (L−1)²]
+    homogeneity   = _prop_mean("homogeneity")  # already in [0,1]
+    energy        = _prop_mean("energy")       # already in [0,1]
+    correlation   = _prop_mean("correlation")  # in [-1,1]
+    entropy_val   = _glcm_entropy_norm2(glcm, levels=levels) # already in [0,1]
+
+    # Normalizations
+    # Contrast: divide by (L-1)^2
+    contrast_norm = contrast / float((levels - 1) ** 2)
+    contrast_norm = float(np.clip(contrast_norm, 0.0, 1.0))
+
+    # Correlation: map [-1,1] -> [0,1]
+    corr_norm = (correlation + 1.0) / 2.0
+    corr_norm = float(np.clip(corr_norm, 0.0, 1.0))
+
     return {
-        "glcm_contrast": _prop_mean("contrast"),
-        "glcm_homogeneity": _prop_mean("homogeneity"),
-        "glcm_energy": _prop_mean("energy"),
-        "glcm_correlation": _prop_mean("correlation"),
-        "glcm_entropy": _prop_mean("entropy")        
+        "glcm_contrast": contrast_norm,
+        "glcm_homogeneity": homogeneity,
+        "glcm_energy": energy,
+        "glcm_correlation": corr_norm,
+        "glcm_entropy": entropy_val,
     }
 
 # ---------------------------------- Local Binary Patterns ------------------------------------------
@@ -373,14 +424,7 @@ def compute_lbp_features(
     lbp = feature.local_binary_pattern(gray01, P=P, R=R, method=method)
 
     # 2) Build normalized histogram over LBP codes
-    # For 'uniform': number of possible output bins is P + 2
-    if method == "uniform":
-        n_bins = P + 2
-    else:
-        # Fallback: determine bins from data (ceil to int range). This keeps things robust
-        # but note: 'uniform' is strongly recommended for stable dimensionality.
-        n_bins = int(lbp.max() + 1)
-
+    n_bins = (P + 2) if method == "uniform" else int(lbp.max() + 1)
     hist, _ = np.histogram(lbp, bins=np.arange(n_bins + 1), range=(0, n_bins))
     p = hist.astype(np.float64)
     total = p.sum()
@@ -390,10 +434,7 @@ def compute_lbp_features(
     p /= total
 
     # 3) LBP histogram entropy (normalized to [0,1])
-    p_nz = p[p > 0]
-    H = -(p_nz * np.log2(p_nz)).sum()
-    H_max = np.log2(n_bins) if n_bins > 1 else 1.0  # avoid /0 when n_bins==1
-    lbp_entropy = float(H / H_max)
+    lbp_entropy = shannon_entropy_norm(hist, nbins=n_bins) 
 
     # 4) LBP histogram energy (sum of squares) in [0,1]
     lbp_energy = float((p * p).sum())
