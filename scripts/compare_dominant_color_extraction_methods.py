@@ -13,7 +13,7 @@ from albcovis.utils.img import limit_image_size
 # Config
 # ---------------------------------------------------------------------
 SRC_DIR = Path("data/source/images")
-OUT_DIR = Path("data/processed/compare_dominant_color_extraction_methods")
+OUT_DIR = Path("data/processed/dominant_color_extraction_methods")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 N_COLORS = 5

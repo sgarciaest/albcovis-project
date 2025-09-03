@@ -13,7 +13,7 @@ from albcovis.utils.img import limit_image_size
 # Config
 # ---------------------------------------------------------------------
 SRC_DIR = Path("data/source/images")
-OUT_DIR = Path("data/processed/tune_cfdc_params")
+OUT_DIR = Path("data/processed/cfdc_params")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 N_COLORS = 5
