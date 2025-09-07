@@ -7,56 +7,6 @@ from typing import Optional
 import numpy as np
 from skimage import color, util
 
-# def download_image(url: str, save_path: str) -> Path:
-#     """Download an image from a URL and save it to the specified path."""
-#     save_path = Path(save_path)
-#     save_path.parent.mkdir(parents=True, exist_ok=True)
-
-#     try:
-#         with requests.get(url, stream=True, timeout=10) as response:
-#             response.raise_for_status()
-#             with open(save_path, "wb") as f:
-#                 for chunk in response.iter_content(chunk_size=8192):
-#                     if chunk:  # Avoid writing keep-alive chunks
-#                         f.write(chunk)
-#     except requests.RequestException as e:
-#         raise RuntimeError(f"Failed to download image from {url}") from e
-
-#     return save_path
-
-# import requests
-# from pathlib import Path
-# from urllib.parse import urlparse
-# from typing import Optional
-
-# def download_image(url: str, save_dir: str, filename: Optional[str] = None) -> Path:
-#     """
-#     Download an image from a URL and save it to the specified directory.
-    
-#     If filename is not provided, the original filename from the URL is used.
-#     """
-#     save_dir = Path(save_dir)
-#     save_dir.mkdir(parents=True, exist_ok=True)
-
-#     # If no filename given, extract from URL path
-#     if filename is None:
-#         parsed_url = urlparse(url)
-#         filename = Path(parsed_url.path).name or "downloaded_image"
-    
-#     save_path = save_dir / filename
-
-#     try:
-#         with requests.get(url, stream=True, timeout=10) as response:
-#             response.raise_for_status()
-#             with open(save_path, "wb") as f:
-#                 for chunk in response.iter_content(chunk_size=8192):
-#                     if chunk:  # Avoid writing keep-alive chunks
-#                         f.write(chunk)
-#     except requests.RequestException as e:
-#         raise RuntimeError(f"Failed to download image from {url}") from e
-
-#     return save_path
-
 
 def download_image(url: str, save_dir: str, filename: Optional[str] = None) -> Path:
     """
