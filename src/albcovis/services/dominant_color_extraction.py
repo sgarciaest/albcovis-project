@@ -8,7 +8,7 @@ from albcovis.utils.img import limit_image_size
 
 # ---- Dominant colors extraction with k-means and Lab color space ----
 
-def dominant_colors_kmeans(path, k=5, sample=400_000, seed=42):
+def dominant_colors_kmeans(path: str, k=5, sample=400_000, seed=42):
     # Load and downsample if needed
     img = Image.open(path).convert("RGB") # ensure rgb color space
     img = limit_image_size(img)
@@ -62,7 +62,7 @@ from colorthief import ColorThief
 import numpy as np
 from skimage import color  # rgb2lab
 
-def dominant_colors_colorthief(path, color_count=5, quality=5):
+def dominant_colors_colorthief(path: str, color_count=5, quality=5):
     ct = ColorThief(path)
     colors_rgb = ct.get_palette(color_count=color_count, quality=quality) or []
     if not colors_rgb:
@@ -94,7 +94,7 @@ def dominant_colors_colorthief(path, color_count=5, quality=5):
 # ---------------------------------------- CFDC ----------------------------------------
 from albcovis.services.cfdc import DominantColorExtractor, ExtractorParams
 
-def dominant_colors_cfdc(path, n_final=5):
+def prominent_colors_cfdc(path: str, n_final=5):
     extractor_ = DominantColorExtractor(ExtractorParams(
         k_init=20,
         bilateral_sigma_spatial=1.25,
@@ -110,6 +110,14 @@ def dominant_colors_cfdc(path, n_final=5):
     out = extractor_.extract(path)
     return out
 
+# --------------------------------- Orchestrator Layer ---------------------------------
+def extract_colors(path: str):
+    dominant_colors = dominant_colors_kmeans(path)
+    prominent_colors = prominent_colors_cfdc(path)
+    return {
+        "dominant_colors": dominant_colors,
+        "prominent_colors": prominent_colors
+    }
 
 # ------------------------------------ Plot Utility ------------------------------------
 import math

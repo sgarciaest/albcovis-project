@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 
-from albcovis.services.dominant_color_extraction import dominant_colors_kmeans, dominant_colors_colorthief, dominant_colors_cfdc, plot_color_swatch
+from albcovis.services.dominant_color_extraction import dominant_colors_kmeans, dominant_colors_colorthief, prominent_colors_cfdc, plot_color_swatch
 # from albcovis.services.cfdc import  DominantColorExtractor, ExtractorParams
 from albcovis.utils.img import limit_image_size
 
@@ -31,7 +31,7 @@ def build_and_save_panel(img_path):
     # Run methods (each returns list of dicts with standardized keys)
     km = dominant_colors_kmeans(str(img_path), k=N_COLORS)
     ct = dominant_colors_colorthief(str(img_path), color_count=N_COLORS)
-    cfdc = dominant_colors_cfdc(str(img_path))  
+    cfdc = prominent_colors_cfdc(str(img_path))  
     # --- Matplotlib layout ---
     # Two columns: image (left), palettes (right) in 3 rows
     fig = plt.figure(figsize=(10, 6), dpi=120)  # feel free to tweak
