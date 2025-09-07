@@ -49,6 +49,29 @@ def download_image(url: str, save_dir: str, filename: Optional[str] = None) -> P
 
     return save_path
 
+def pil_to_numpy01(img: Image.Image) -> np.ndarray:
+    """
+    Convert a PIL RGB image to a float32 NumPy array in [0, 1].
+    Output shape: (H, W, 3).
+    """
+    if img.mode != "RGB":
+        img = img.convert("RGB")
+    arr = np.asarray(img, dtype=np.uint8)
+    # skimage works best with float in [0,1]
+    rgb01 = util.img_as_float32(arr)  # scales uint8 [0,255] -> float32 [0,1]
+    return rgb01
+
+
+def rgb_to_gray(rgb01: np.ndarray) -> np.ndarray:
+    """
+    Convert an RGB float image in [0,1] to grayscale float in [0,1].
+    """
+    # skimage.color.rgb2gray expects float in [0,1]; returns float in [0,1]
+    gray = color.rgb2gray(rgb01)
+    gray01 = gray.astype(np.float32)
+    return gray01
+
+
 def limit_image_size(img: Image.Image, target_area: int = 512*512) -> Image.Image:
     """
     Downsample an image so that its area does not exceed target_area pixels.
@@ -71,24 +94,3 @@ def limit_image_size(img: Image.Image, target_area: int = 512*512) -> Image.Imag
         return img.resize((new_w, new_h), Image.BILINEAR)
     else:
         return img
-
-
-def pil_to_numpy01(img: Image.Image) -> np.ndarray:
-    """
-    Convert a PIL RGB image to a float32 NumPy array in [0, 1].
-    Output shape: (H, W, 3).
-    """
-    if img.mode != "RGB":
-        img = img.convert("RGB")
-    arr = np.asarray(img, dtype=np.uint8)
-    # skimage works best with float in [0,1]
-    return util.img_as_float32(arr)  # scales uint8 [0,255] -> float32 [0,1]
-
-
-def rgb_to_gray(rgb01: np.ndarray) -> np.ndarray:
-    """
-    Convert an RGB float image in [0,1] to grayscale float in [0,1].
-    """
-    # skimage.color.rgb2gray expects float in [0,1]; returns float in [0,1]
-    gray = color.rgb2gray(rgb01)
-    return gray.astype(np.float32)
