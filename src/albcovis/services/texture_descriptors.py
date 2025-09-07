@@ -223,7 +223,7 @@ def compute_sobel_gradients(gray01: np.ndarray) -> Tuple[np.ndarray, np.ndarray,
     mag = np.hypot(gx, gy).astype(np.float32)
     return gx, gy, mag
 
-def edge_density(edges: np.ndarray) -> float:
+def compute_edge_density(edges: np.ndarray) -> float:
     """
     Fraction of pixels that are edges.
     edges: boolean array (H, W) from Canny.
@@ -234,7 +234,7 @@ def edge_density(edges: np.ndarray) -> float:
     return count / float(total) if total > 0 else 0.0
 
 
-def orientation_entropy_from_sobel(gx: np.ndarray, gy: np.ndarray, mag: np.ndarray, nbins: int = 18) -> float:
+def compute_orientation_entropy(gx: np.ndarray, gy: np.ndarray, mag: np.ndarray, nbins: int = 18) -> float:
     """
     Entropy of edge orientations, weighted by gradient magnitude.
     - We collapse angles to [0, pi) (orientation, not direction).
@@ -442,4 +442,84 @@ def compute_lbp_features(
     return {
         "lbp_entropy": lbp_entropy,
         "lbp_energy": lbp_energy,
+    }
+
+# -------------------------------- Orchestration layer -----------------------------------
+def extract_visual_complexity(gray01: np.ndarray):
+    # Edge density & Orientation entropy
+    edges = compute_canny_edges(gray01, sigma=0.75)
+    edge_density = compute_edge_density(edges)
+    gx, gy, mag = compute_sobel_gradients(gray01)
+    orientation_entropy = compute_orientation_entropy(gx, gy, mag, nbins=18)
+
+    # Pixel intensity entropy
+    pixel_intensity_entropy = compute_entropy_gray(gray01)
+
+    # GLCM features
+    glcm_features = compute_glcm_features(gray01)
+    glcm_contrast = glcm_features["glcm_contrast"]
+    glcm_homogeneity = glcm_features["glcm_homogeneity"]
+    glcm_energy = glcm_features["glcm_energy"]
+    glcm_correlation = glcm_features["glcm_correlation"]
+    glcm_entropy = glcm_features["glcm_entropy"]
+
+    # LBP Features
+    lbp_features = compute_lbp_features(gray01)
+    lbp_entropy = lbp_features["lbp_entropy"]
+    lbp_energy = lbp_features["lbp_energy"]
+
+
+
+    # Compute visual complexity metric
+    descriptors = {
+        "edge_density": edge_density,                         # [0,1]
+        "orientation_entropy": orientation_entropy,           # [0,1]
+        
+        "pixel_intensity_entropy": pixel_intensity_entropy,   # [0,1]
+
+        "glcm_contrast": glcm_contrast,                       # [0,1]
+        "glcm_nonhomog": 1.0 - glcm_homogeneity,              # [0,1]
+        "glcm_nonenergy": 1.0 - glcm_energy,                  # [0,1]
+        "glcm_noncorr": 1.0 - glcm_correlation,               # [0,1]
+        "glcm_entropy": glcm_entropy,                         # [0,1]
+
+        "lbp_entropy": lbp_entropy,                           # [0,1]
+        "lbp_nonenergy": 1.0 - lbp_energy,                    # [0,1]
+    }
+
+    weights = {
+        "edge_density":              0.10,
+        "orientation_entropy":       0.10,
+
+        "pixel_intensity_entropy":   0.10,
+
+        "glcm_contrast":             0.10,
+        "glcm_nonhomog":             0.10,
+        "glcm_nonenergy":            0.10,
+        "glcm_noncorr":              0.10,
+        "glcm_entropy":              0.10,
+
+        "lbp_entropy":               0.10,
+        "lbp_nonenergy":             0.10,
+    }
+
+    visual_complexity = sum(weights[k] * descriptors[k] for k in weights)  # in [0,1]
+
+    return {
+        "texture_descriptors" : {
+            "edge_density": edge_density,
+            "orientation_entropy": orientation_entropy,
+            
+            "pixel_intensity_entropy": pixel_intensity_entropy,
+
+            "glcm_contrast": glcm_contrast,
+            "glcm_homogeneity": glcm_homogeneity,
+            "glcm_energy": glcm_energy,
+            "glcm_correlation": glcm_correlation,
+            "glcm_entropy": glcm_entropy,
+
+            "lbp_entropy": lbp_entropy,
+            "lbp_energy": lbp_energy,
+        },
+        "visual_complexity": visual_complexity
     }
