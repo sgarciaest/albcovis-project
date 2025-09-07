@@ -468,42 +468,29 @@ def extract_visual_complexity(gray01: np.ndarray):
     lbp_entropy = lbp_features["lbp_entropy"]
     lbp_energy = lbp_features["lbp_energy"]
 
+    # build group scores
+    group_A = (pixel_intensity_entropy + glcm_entropy + lbp_entropy) / 3.0
+    group_B = ((1.0 - glcm_homogeneity) + (1.0 - glcm_energy) + (1.0 - lbp_energy)) / 3.0
+    group_C = (edge_density + orientation_entropy) / 2.0
+    group_D = (glcm_contrast + (1.0 - glcm_correlation)) / 2.0
 
+    # group weight
+    wA, wB, wC, wD = 0.45, 0.30, 0.20, 0.05
 
-    # Compute visual complexity metric
-    descriptors = {
-        "edge_density": edge_density,                         # [0,1]
-        "orientation_entropy": orientation_entropy,           # [0,1]
-        
-        "pixel_intensity_entropy": pixel_intensity_entropy,   # [0,1]
+    visual_complexity = (
+        wA * group_A +
+        wB * group_B +
+        wC * group_C +
+        wD * group_D
+    )
 
-        "glcm_contrast": glcm_contrast,                       # [0,1]
-        "glcm_nonhomog": 1.0 - glcm_homogeneity,              # [0,1]
-        "glcm_nonenergy": 1.0 - glcm_energy,                  # [0,1]
-        "glcm_noncorr": 1.0 - glcm_correlation,               # [0,1]
-        "glcm_entropy": glcm_entropy,                         # [0,1]
-
-        "lbp_entropy": lbp_entropy,                           # [0,1]
-        "lbp_nonenergy": 1.0 - lbp_energy,                    # [0,1]
-    }
-
-    weights = {
-        "edge_density":              0.10,
-        "orientation_entropy":       0.10,
-
-        "pixel_intensity_entropy":   0.10,
-
-        "glcm_contrast":             0.10,
-        "glcm_nonhomog":             0.10,
-        "glcm_nonenergy":            0.10,
-        "glcm_noncorr":              0.10,
-        "glcm_entropy":              0.10,
-
-        "lbp_entropy":               0.10,
-        "lbp_nonenergy":             0.10,
-    }
-
-    visual_complexity = sum(weights[k] * descriptors[k] for k in weights)  # in [0,1]
+    '''
+    We group ten descriptors into four phenomena—entropy/busyness, non-uniformity (anti-smoothness),
+    edge geometry, and contrast/predictability—based on their inter-correlations and conceptual overlap.
+    We weight groups 0.45/0.30/0.20/0.05 and average equally within each group.
+    This avoids double-counting correlated measures, keeps the index interpretable,
+    and aligns with perceptual notions of visual complexity while remaining deterministic and dataset-independent.
+    '''
 
     return {
         "texture_descriptors" : {
@@ -521,5 +508,6 @@ def extract_visual_complexity(gray01: np.ndarray):
             "lbp_entropy": lbp_entropy,
             "lbp_energy": lbp_energy,
         },
+
         "visual_complexity": visual_complexity
     }
