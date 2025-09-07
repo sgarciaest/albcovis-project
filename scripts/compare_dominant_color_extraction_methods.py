@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 
-from albcovis.services.dominant_color_extraction import dominant_colors_kmeans, dominant_colors_colorthief, prominent_colors_cfdc, plot_color_swatch
+from albcovis.services.color_extraction import dominant_colors_kmeans, dominant_colors_colorthief, prominent_colors_cfdc, plot_color_swatch
 # from albcovis.services.cfdc import  DominantColorExtractor, ExtractorParams
 from albcovis.utils.img import limit_image_size
 

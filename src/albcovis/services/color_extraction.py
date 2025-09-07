@@ -110,7 +110,7 @@ def prominent_colors_cfdc(path: str, n_final=5):
     out = extractor_.extract(path)
     return out
 
-# --------------------------------- Orchestrator Layer ---------------------------------
+# --------------------------------- Orchestration Layer ---------------------------------
 def extract_colors(path: str):
     dominant_colors = dominant_colors_kmeans(path)
     prominent_colors = prominent_colors_cfdc(path)
