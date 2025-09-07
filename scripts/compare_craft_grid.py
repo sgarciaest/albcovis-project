@@ -30,7 +30,7 @@ exts = (".png", ".jpg", ".jpeg", ".webp", ".bmp")
 # Param grid
 param_grid = list(itertools.product(
     [0.9, 0.7, 0.5, 0.3],    # text_threshold
-    [0.6, 0.4, 0.2],         # link_threshold
+    [0.6, 0.4, 0.2, 0.1],    # link_threshold
     [0.4],                   # low_text
     [1280, 800, 500]         # long size
 ))
@@ -205,7 +205,7 @@ def build_and_save_panel(path, all_detections):
     # fig, axes = plt.subplots(n_rows, n_cols, figsize=(4 * n_cols, 4 * n_rows), squeeze=False)
 
     n = len(all_detections) + 1
-    n_cols = 6
+    n_cols = 10
     n_rows = (n + n_cols - 1) // n_cols
     fig, axes = plt.subplots(n_rows, n_cols, figsize=(4 * n_cols, 4 * n_rows), squeeze=False)
 
