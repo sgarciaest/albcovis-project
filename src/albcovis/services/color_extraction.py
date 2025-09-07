@@ -8,14 +8,8 @@ from albcovis.utils.img import limit_image_size
 
 # ---- Dominant colors extraction with k-means and Lab color space ----
 
-def dominant_colors_kmeans(path: str, k=5, sample=400_000, seed=42):
-    # Load and downsample if needed
-    img = Image.open(path).convert("RGB") # ensure rgb color space
-    img = limit_image_size(img)
-
-    # sRGB [0,1] -> Lab (D65) using scikit-image
-    rgb = np.asarray(img, dtype=np.float32) / 255.0 # H×W×3 shape array (3d)
-    lab = color.rgb2lab(rgb).reshape(-1, 3).astype(np.float32) # Nx3 shape array (2d, pixel list, each pixel a row, features the Lab color space)
+def dominant_colors_kmeans(rgb01: np.ndarray, k=5, sample=400_000, seed=42):
+    lab = color.rgb2lab(rgb01).reshape(-1, 3).astype(np.float32) # Nx3 shape array (2d, pixel list, each pixel a row, features the Lab color space)
 
     # Optional random sampling
     if sample and lab.shape[0] > sample:
@@ -94,7 +88,7 @@ def dominant_colors_colorthief(path: str, color_count=5, quality=5):
 # ---------------------------------------- CFDC ----------------------------------------
 from albcovis.services.cfdc import DominantColorExtractor, ExtractorParams
 
-def prominent_colors_cfdc(path: str, n_final=5):
+def prominent_colors_cfdc(rgb01: np.ndarray, n_final=5):
     extractor_ = DominantColorExtractor(ExtractorParams(
         k_init=20,
         bilateral_sigma_spatial=1.25,
@@ -107,13 +101,13 @@ def prominent_colors_cfdc(path: str, n_final=5):
         wA = 0.8,
         pick_contrast_second=False
     ))
-    out = extractor_.extract(path)
+    out = extractor_.extract(rgb01)
     return out
 
 # --------------------------------- Orchestration Layer ---------------------------------
-def extract_colors(path: str):
-    dominant_colors = dominant_colors_kmeans(path)
-    prominent_colors = prominent_colors_cfdc(path)
+def extract_colors(rgb01: np.ndarray):
+    dominant_colors = dominant_colors_kmeans(rgb01)
+    prominent_colors = prominent_colors_cfdc(rgb01)
     return {
         "dominant_colors": dominant_colors,
         "prominent_colors": prominent_colors

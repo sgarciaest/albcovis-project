@@ -1,4 +1,3 @@
-
 # ------- Color Feature Based Dominant Color Extraction (CFDC) -------
 # (For me it's more the prominent color extraction rather than dominant)
 # (WARNING) This method needs:
@@ -361,13 +360,9 @@ class DominantColorExtractor:
         return selected
 
     # ---- Orchestrator ----
-    def extract(self, path) -> Dict[str, np.ndarray]:
-        img = Image.open(path).convert("RGB")
-        img = limit_image_size(img)
-        img_rgb = np.array(img)
-
+    def extract(self, rgb01) -> Dict[str, np.ndarray]:
         # ---- Step 1: bilateral filter in Lab ----
-        lab_f = self._bilateral_lab(img_rgb)
+        lab_f = self._bilateral_lab(rgb01)
 
         # ---- Step 2: K-means in Lab ----
         labels_km, centers_km = self._kmeans_lab(lab_f)

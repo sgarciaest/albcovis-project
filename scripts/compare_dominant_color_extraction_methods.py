@@ -23,15 +23,15 @@ METHOD_LABELS = ["K-Means (Lab)", "MMCQ (ColorThief)", "CFDC (Chang & Mukai)"]
 # Helper: build one figure with image on the left and 3 swatch rows on right
 # ---------------------------------------------------------------------
 def build_and_save_panel(img_path):
-    # Load + limit size (utility)
-    img = Image.open(img_path).convert("RGB")
+    # Load + limit size
+    img = Image.open(path).convert("RGB") # ensure rgb color space
     img = limit_image_size(img)
-    img_np = np.asarray(img, dtype=np.uint8)
+    rgb01 = pil_to_numpy01(img)
 
     # Run methods (each returns list of dicts with standardized keys)
-    km = dominant_colors_kmeans(str(img_path), k=N_COLORS)
+    km = dominant_colors_kmeans(rgb01, k=N_COLORS)
     ct = dominant_colors_colorthief(str(img_path), color_count=N_COLORS)
-    cfdc = prominent_colors_cfdc(str(img_path))  
+    cfdc = prominent_colors_cfdc(rgb01)  
     # --- Matplotlib layout ---
     # Two columns: image (left), palettes (right) in 3 rows
     fig = plt.figure(figsize=(10, 6), dpi=120)  # feel free to tweak
@@ -39,7 +39,7 @@ def build_and_save_panel(img_path):
 
     # Left: the image spans all rows
     ax_img = fig.add_subplot(gs[:, 0])
-    ax_img.imshow(img_np)
+    ax_img.imshow(rgb01)
     ax_img.set_axis_off()
     ax_img.set_title(img_path.name, fontsize=11, pad=6)
 
