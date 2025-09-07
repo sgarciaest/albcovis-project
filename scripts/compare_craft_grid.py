@@ -66,6 +66,39 @@ def polygon_to_bbox(poly):
     x, y, w, h = min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys)
     return [x, y, w, h]
 
+def extract_ap(coco_eval, iou_threshold, category_id=0):
+    iou_thrs = coco_eval.params.iouThrs
+    area_idx = coco_eval.params.areaRngLbl.index("all")
+    maxdet_idx = coco_eval.params.maxDets.index(100)
+
+    try:
+        iou_idx = np.where(np.isclose(iou_thrs, iou_threshold))[0][0]
+        cat_idx = coco_eval.params.catIds.index(category_id)
+    except (IndexError, ValueError):
+        return -1.0
+
+    precisions = coco_eval.eval['precision']
+    values = precisions[iou_idx, :, cat_idx, area_idx, maxdet_idx]
+    values = values[values > -1]
+    return np.mean(values) if values.size > 0 else -1.0
+
+def extract_ar(coco_eval, iou_threshold, category_id=0):
+    iou_thrs = coco_eval.params.iouThrs
+    area_idx = coco_eval.params.areaRngLbl.index("all")
+    maxdet_idx = coco_eval.params.maxDets.index(100)
+
+    try:
+        iou_idx = np.where(np.isclose(iou_thrs, iou_threshold))[0][0]
+        cat_idx = coco_eval.params.catIds.index(category_id)
+    except (IndexError, ValueError):
+        return -1.0
+
+    recalls = coco_eval.eval['recall']
+    value = recalls[iou_idx, cat_idx, area_idx, maxdet_idx]
+    return value if value > -1 else -1.0
+
+
+
 # ----------------- CRAFT DETECTION PHASE ---------------------------
 
 def generate_predictions_for_params(images_dir, coco_gt_json, output_json_path,
@@ -134,18 +167,30 @@ def generate_predictions_for_params(images_dir, coco_gt_json, output_json_path,
     return np.mean(times), output_json_path
 
 # ---------------------- METRIC EVALUATION -----------------------------
+
+
 def run_coco_eval(ground_truth_json, category_id, prediction_json):
     coco_gt = COCO(ground_truth_json)
     coco_dt = coco_gt.loadRes(prediction_json)
-    coco_eval = COCOeval(coco_gt, coco_dt, iouType='segm')
-    coco_eval.params.iouThrs = np.linspace(MIN_IOU_THRESHOLD, 0.95, int((0.95 - MIN_IOU_THRESHOLD) / 0.05) + 1)
+    coco_eval = COCOeval(coco_gt, coco_dt, iouType='segm')  # or 'bbox' if you're using boxes
+    coco_eval.params.iouThrs = np.linspace(0.1, 0.95, 18)  # includes 0.10, 0.30, 0.50
     coco_eval.params.catIds = [category_id]
     coco_eval.evaluate()
     coco_eval.accumulate()
     coco_eval.summarize()
 
-    metrics = coco_eval.stats.tolist()
-    return metrics
+    ap_all = coco_eval.stats[0]  # AP@[0.10:0.95]
+    ap_010 = extract_ap(coco_eval, 0.10, category_id)
+    ap_030 = extract_ap(coco_eval, 0.30, category_id)
+    ap_050 = extract_ap(coco_eval, 0.50, category_id)
+
+    ar_all = coco_eval.stats[8]  # AR@[0.10:0.95] (from updated iouThrs)
+    ar_010 = extract_ar(coco_eval, 0.10, category_id)
+    ar_030 = extract_ar(coco_eval, 0.30, category_id)
+    ar_050 = extract_ar(coco_eval, 0.50, category_id)
+
+    return [ap_all, ap_010, ap_030, ap_050, ar_all, ar_010, ar_030, ar_050]
+
 
 # --------------------- VISUALIZATION PANEL ----------------------------
 def build_and_save_panel(path, all_detections):
@@ -234,18 +279,11 @@ if __name__ == "__main__":
         results.append([param_name, mean_time] + metrics)
 
     # Save metrics summary
-    # columns = ["config", "mean_time"] + [
-    #     "AP@[IoU=0.50:0.95]", "AP@0.50", "AP@0.75",
-    #     "AP_small", "AP_medium", "AP_large",
-    #     "AR@1", "AR@10", "AR@100",
-    #     "AR_small", "AR_medium", "AR_large"
-    # ]
     columns = ["config", "mean_time"] + [
-        f"AP@[IoU={MIN_IOU_THRESHOLD:.2f}:0.95]",  # dynamic label
-        "AP@0.50", "AP@0.75",
-        "AP_small", "AP_medium", "AP_large",
-        "AR@1", "AR@10", "AR@100",
-        "AR_small", "AR_medium", "AR_large"
+        "AP@[IoU=0.10:0.95]",
+        "AP@0.10", "AP@0.30", "AP@0.50",
+        "AR@[IoU=0.10:0.95]",
+        "AR@0.10", "AR@0.30", "AR@0.50"
     ]
 
     df = pd.DataFrame(results, columns=columns)
