@@ -1,11 +1,31 @@
 from typing import Optional, Dict, Any, List
 import requests
+import tempfile
+from pathlib import Path
+from PIL import Image
+
+
 from albcovis.settings import settings
 from albcovis.services.musicbrainz import MusicBrainzClient, ensure_uuid
 from albcovis.services.discogs import DiscogsClient
-from albcovis.models.cover_data import CoverDataModel
 from albcovis.models.musicbrainz import MusicBrainzReleaseGroup, CoverArtResponse
 from albcovis.models.discogs import DiscogsMaster, DiscogsRelease
+from albcovis.models.cover_data import CoverDataModel
+from albcovis.utils.img import limit_image_size, pil_to_numpy01, rgb_to_gray
+from albcovis.services import color_extraction, texture_descriptors, face_detection, text_detection
+
+
+PREF_ORDER = ("px_500", "large", "px_250", "small", "px_1200")
+def pick_caa_url(cover_art) -> tuple[str, str]:
+    """
+    Returns (url, size_tag) choosing the best available thumbnail or the full image.
+    `cover_art` is an instance of CoverArtArchiveImage model from cover_data
+    """
+    for k in PREF_ORDER:
+        url = getattr(cover_art.thumbnails, k, None)
+        if url is not None:
+            return str(url), k
+    return str(cover_art.image), "orig"
 
 
 class CoverDataAggregator:
@@ -144,3 +164,65 @@ class CoverDataAggregator:
             releases=releases_out,
             cover_art=caa_front
         )
+    
+    from PIL import Image
+    from typing import Dict
+
+    from albcovis.utils.img import limit_image_size, pil_to_numpy01, rgb_to_gray
+    from albcovis.services import color_extraction, texture_descriptors, face_detection, text_detection
+
+    def extract_visual_features_from_cover(self, path: str) -> Dict:
+        # Ensure path format is str and not Path
+        path = str(path)
+
+        # Preprocess
+        img = Image.open(path)
+        img = limit_image_size(img)
+        rgb01 = pil_to_numpy01(img)
+        gray01 = rgb_to_gray(rgb01)
+
+        c = color_extraction.extract_colors(rgb01)
+        vcd = texture_descriptors.extract_visual_complexity_descriptors(gray01)
+        fd = face_detection.detect_faces(path)
+        td = text_detection.detect_text(path)
+
+        return {
+            "colors": c,
+            "visual_complexity_descriptors": vcd,
+            "face_detection": fd,
+            "text_detection": td
+        }
+    
+    def get_rg_cover_data_visual_features(
+        self, mbid: str, discogs_hint_id: Optional[str] = None
+    ) -> CoverDataModel:
+        # Get base metadata
+        cover_data = self.get_rg_cover_data(mbid, discogs_hint_id)
+
+        # If no cover art → return the same
+        if not cover_data.cover_art or not cover_data.cover_art.image:
+            return cover_data
+
+        # Select best url based on priority
+        url, size_tag = pick_caa_url(cover_data.cover_art)
+
+        # Download image as a temporary file to process it
+        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
+            r = requests.get(url, stream=True, timeout=60)
+            r.raise_for_status()
+            tmp.write(r.content)
+            tmp.flush()
+            tmp_path = Path(tmp.name)
+
+        try:
+            # Extract visual features
+            vf = self.extract_visual_features_from_cover(tmp_path)
+
+            # Add to the data
+            cover_data.cover_art.visual_features = vf
+
+        finally:
+            # deletetemp file
+            tmp_path.unlink(missing_ok=True)
+
+        return cover_data

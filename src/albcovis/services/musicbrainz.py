@@ -16,19 +16,6 @@ def ensure_uuid(mbid: str) -> str:
     except (ValueError, AttributeError):
         raise ValueError(f"Invalid MBID (UUID expected): {mbid!r}")
 
-PREF_ORDER = ("px_500", "large", "px_250", "small", "px_1200")
-
-def pick_caa_url(cover_art) -> tuple[str, str]:
-    """
-    Returns (url, size_tag) choosing the best available thumbnail or the full image.
-    `cover_art` is an instance of CoverArtArchiveImage model from cover_data
-    """
-    for k in PREF_ORDER:
-        url = getattr(cover_art.thumbnails, k, None)
-        if url is not None:
-            return str(url), k
-    return str(cover_art.image), "orig"
-
 class MusicBrainzClient:
     BASE = "https://musicbrainz.org/ws/2"
     CAA = "https://coverartarchive.org"
