@@ -445,7 +445,7 @@ def compute_lbp_features(
     }
 
 # -------------------------------- Orchestration layer -----------------------------------
-def extract_visual_complexity(gray01: np.ndarray):
+def extract_visual_complexity_descriptors(gray01: np.ndarray):
     # Edge density & Orientation entropy
     edges = compute_canny_edges(gray01, sigma=0.75)
     edge_density = compute_edge_density(edges)
