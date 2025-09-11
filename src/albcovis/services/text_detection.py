@@ -28,7 +28,7 @@ def detect_text(path: str) -> Dict:
     )
 
 
-    boxes = prediction.get("boxes", [])
+    boxes = prediction_result.get("boxes", [])
     texts: List[Dict] = []
 
     for box in boxes:
