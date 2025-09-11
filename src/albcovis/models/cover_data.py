@@ -87,16 +87,16 @@ class Detection(CoverDataBaseModel):
 class FaceDetectionSummary(CoverDataBaseModel):
     n_faces: int
     mean_area: float
-    largest_face: Detection
-    highest_confidence_face: Detection
     average_relative_size: float
+    largest_face: Optional[Detection] = None
+    highest_confidence_face: Optional[Detection] = None
     faces: List[Detection] = Field(default_factory=list)
 
 class TextDetectionSummary(CoverDataBaseModel):
     n_texts: int
     mean_area: float
-    largest_text: Detection
     average_relative_size: float
+    largest_text: Detection
     texts: List[Detection] = Field(default_factory=list)
 
 class VisualFeatures(CoverDataBaseModel):
