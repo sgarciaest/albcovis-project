@@ -32,12 +32,11 @@ def detect_faces(path: str) -> Dict:
     # Aggregated metrics
     out = {
         "n_faces": len(faces),
-        "mean_area": mean([f["area"] for f in faces]),
+        "mean_area": mean([f["area"] for f in faces]) if faces else 0,
         "largest_face": max(faces, key=lambda f: f["area"], default=None),
         "highest_confidence_face": max(faces, key=lambda f: f["confidence"], default=None),
-        "average_relative_size": sum([f["area"] for f in faces]) / img_area,
+        "average_relative_size": sum([f["area"] for f in faces]) / img_area if faces else 0,
+        "faces": faces
     }
-
-    out["faces"] = faces
 
     return out
