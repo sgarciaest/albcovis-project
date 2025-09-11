@@ -28,7 +28,7 @@ def detect_text(path: str) -> Dict:
     )
 
 
-    boxes = prediction_result["boxes"]
+    boxes = prediction.get("boxes", [])
     texts: List[Dict] = []
 
     for box in boxes:
@@ -43,12 +43,6 @@ def detect_text(path: str) -> Dict:
 
         text_info = {
             "bbox": [float(x_min), float(y_min), float(width), float(height)],
-            "segmentation": [[
-                float(x_min), float(y_min),
-                float(x_max), float(y_min),
-                float(x_max), float(y_max),
-                float(x_min), float(y_max)
-            ]],
             "area": float(area),
             "relative_size": float(area / img_area),
         }
@@ -57,9 +51,9 @@ def detect_text(path: str) -> Dict:
     # Aggregate stats
     out = {
         "n_texts": len(texts),
-        "mean_area": mean([t["area"] for t in texts]) if texts else 0,
+        "mean_area": mean([t["area"] for t in texts]) if texts else 0.0,
         "largest_text": max(texts, key=lambda t: t["area"], default=None),
-        "average_relative_size": sum([t["area"] for t in texts]) / img_area if texts else 0,
+        "average_relative_size": sum([t["area"] for t in texts]) / img_area if texts else 0.0,
         "texts": texts
     }
 

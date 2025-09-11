@@ -18,24 +18,23 @@ def detect_faces(path: str) -> Dict:
     faces: List[Dict] = []
     for d in faces_raw:
         fa = {k: v for k, v in d["facial_area"].items() if k not in keys_to_remove} # Don't return the array of pixels
-        x, y, w_box, h_box = fa["x"], fa["y"], fa["w"], fa["h"]
+        x, y, w_box, h_box = float(fa["x"]), float(fa["y"]), float(fa["w"]), float(fa["h"])
         area = w_box * h_box
         face_info = {
             "bbox": [x, y, w_box, h_box],
-            "segmentation": [[x, y, x + w_box, y, x + w_box, y + h_box, x, y + h_box]],
-            "area": area,
-            "relative_size": area / img_area,
-            "confidence": d.get("confidence", 1.0),
+            "area": float(area),
+            "relative_size": float(area / img_area),
+            "confidence": d.get("confidence", None),
         }
         faces.append(face_info)
 
     # Aggregated metrics
     out = {
         "n_faces": len(faces),
-        "mean_area": mean([f["area"] for f in faces]) if faces else 0,
+        "mean_area": mean([f["area"] for f in faces]) if faces else 0.0,
         "largest_face": max(faces, key=lambda f: f["area"], default=None),
         "highest_confidence_face": max(faces, key=lambda f: f["confidence"], default=None),
-        "average_relative_size": sum([f["area"] for f in faces]) / img_area if faces else 0,
+        "average_relative_size": sum([f["area"] for f in faces]) / img_area if faces else 0.0,
         "faces": faces
     }
 

@@ -58,16 +58,52 @@ class ColorSwatch(CoverDataBaseModel):
     lab: Annotated[List[float], Field(min_length=3, max_length=3)]
     weight: Optional[Annotated[float, Field(ge=0.0, le=1.0)]] = None
 
-class ColorFeatures(CoverDataBaseModel):
+class ColorExtractionMethods(CoverDataBaseModel):
     dominant_colors: List[ColorSwatch] = Field(default_factory=list)
     prominent_colors: List[ColorSwatch] = Field(default_factory=list)
 
+class TextureDescriptors(CoverDataBaseModel):
+    edge_density: Annotated[float, Field(ge=0.0, le=1.0)]
+    orientation_entropy: Annotated[float, Field(ge=0.0, le=1.0)]
+    pixel_intensity_entropy: Annotated[float, Field(ge=0.0, le=1.0)]
+    glcm_contrast: Annotated[float, Field(ge=0.0, le=1.0)]
+    glcm_homogeneity: Annotated[float, Field(ge=0.0, le=1.0)]
+    glcm_energy: Annotated[float, Field(ge=0.0, le=1.0)]
+    glcm_correlation: Annotated[float, Field(ge=0.0, le=1.0)]
+    glcm_entropy: Annotated[float, Field(ge=0.0, le=1.0)]
+    lbp_entropy: Annotated[float, Field(ge=0.0, le=1.0)]
+    lbp_energy: Annotated[float, Field(ge=0.0, le=1.0)]
+
+class VisualComplexity(CoverDataBaseModel):
+    texture_descriptors: TextureDescriptors
+    visual_complexity: Annotated[float, Field(ge=0.0, le=1.0)]
+
+class Detection(CoverDataBaseModel):
+    bbox: List[float] = Field(default_factory=list)
+    area: float
+    relative_size: float
+    confidence: Optional[Annotated[float, Field(ge=0.0, le=1.0)]] = None
+
+class FaceDetectionSummary(CoverDataBaseModel):
+    n_faces: int
+    mean_area: float
+    largest_face: Detection
+    highest_confidence_face: Detection
+    average_relative_size: float
+    faces: List[Detection] = Field(default_factory=list)
+
+class TextDetectionSummary(CoverDataBaseModel):
+    n_texts: int
+    mean_area: float
+    largest_text: Detection
+    average_relative_size: float
+    texts: List[Detection] = Field(default_factory=list)
+
 class VisualFeatures(CoverDataBaseModel):
-    colors: ColorFeatures
-    texture: Optional[Dict[str, Any]] = None
-    human_face_presence: Optional[Dict[str, Any]] = None
-    text_detection: Optional[Dict[str, Any]] = None
-    style_classification: Optional[Dict[str, Any]] = None
+    colors: ColorExtractionMethods
+    visual_complexity_descriptors: VisualComplexity
+    face_detection: FaceDetectionSummary
+    text_detection: TextDetectionSummary
 
 class CoverArtArchiveImage(CoverDataBaseModel):
     id: str
