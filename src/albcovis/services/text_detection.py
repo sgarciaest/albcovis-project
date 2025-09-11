@@ -52,8 +52,8 @@ def detect_text(path: str) -> Dict:
     out = {
         "n_texts": len(texts),
         "mean_area": mean([t["area"] for t in texts]) if texts else 0.0,
-        "largest_text": max(texts, key=lambda t: t["area"], default=None),
         "average_relative_size": sum([t["area"] for t in texts]) / img_area if texts else 0.0,
+        "largest_text": max(texts, key=lambda t: t["area"], default=None),
         "texts": texts
     }
 

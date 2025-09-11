@@ -96,7 +96,7 @@ class TextDetectionSummary(CoverDataBaseModel):
     n_texts: int
     mean_area: float
     average_relative_size: float
-    largest_text: Detection
+    largest_text: Optional[Detection] = None
     texts: List[Detection] = Field(default_factory=list)
 
 class VisualFeatures(CoverDataBaseModel):
