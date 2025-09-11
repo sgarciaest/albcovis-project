@@ -13,7 +13,7 @@ class CoverDataAggregator:
         self.mb = mb or MusicBrainzClient()
         self.dg = dg or DiscogsClient()
 
-    def get_release_group_cover_data(self, mbid: str, discogs_hint_id: Optional[str] = None) -> CoverDataModel:
+    def get_rg_cover_data(self, mbid: str, discogs_hint_id: Optional[str] = None) -> CoverDataModel:
         mbid = ensure_uuid(mbid)
         mb_rg: MusicBrainzReleaseGroup = self.mb.get_release_group(mbid)
 

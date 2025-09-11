@@ -71,7 +71,7 @@ for i, row in enumerate(sample.itertuples(index=False), start=1):
     print(f"[{i}/{total}] Processing MBID {row.mbid}...")
 
     try:
-        cover_data = agg.get_release_group_cover_data(
+        cover_data = agg.get_rg_cover_data(
             mbid=row.mbid,
             discogs_hint_id=getattr(row, "discogs_id", None) or None
         )
