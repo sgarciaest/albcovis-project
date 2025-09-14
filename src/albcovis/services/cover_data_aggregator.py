@@ -12,6 +12,7 @@ from albcovis.models.musicbrainz import MusicBrainzReleaseGroup, CoverArtRespons
 from albcovis.models.discogs import DiscogsMaster, DiscogsRelease
 from albcovis.models.cover_data import CoverDataModel
 from albcovis.utils.img import limit_image_size, pil_to_numpy01, rgb_to_gray
+from albcovis.utils.http import make_session
 from albcovis.services import color_extraction, texture_descriptors, face_detection, text_detection
 
 
@@ -32,6 +33,7 @@ class CoverDataAggregator:
     def __init__(self, mb: Optional[MusicBrainzClient] = None, dg: Optional[DiscogsClient] = None):
         self.mb = mb or MusicBrainzClient()
         self.dg = dg or DiscogsClient()
+        self.img_session = make_session(settings.user_agent)
 
     def get_rg_cover_data(self, mbid: str, discogs_hint_id: Optional[str] = None) -> CoverDataModel:
         mbid = ensure_uuid(mbid)
@@ -208,7 +210,7 @@ class CoverDataAggregator:
 
         # Download image as a temporary file to process it
         with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
-            r = requests.get(url, stream=True, timeout=60)
+            r = self.img_session.get(url, stream=True, timeout=60)
             r.raise_for_status()
             tmp.write(r.content)
             tmp.flush()
