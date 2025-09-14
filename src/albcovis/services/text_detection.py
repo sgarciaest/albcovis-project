@@ -1,3 +1,5 @@
+import albcovis.patches.monkey_patch_craft_utils
+
 from craft_text_detector import load_craftnet_model, load_refinenet_model, get_prediction
 from PIL import Image
 from typing import List, Dict
