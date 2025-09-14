@@ -16,7 +16,6 @@ cycler==0.12.1
 debugpy==1.8.16
 decorator==5.2.1
 deepface==0.0.95
-dlib==20.0.0
 executing==2.2.0
 filelock==3.19.1
 fire==0.7.1
