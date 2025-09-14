@@ -32,7 +32,7 @@ analysis_set = []
 
 
 # Limit to first 5 rows for testing
-filtered_data = filtered_data.head(5)
+filtered_data = filtered_data.head(50)
 
 # Process each row
 errors_count = 0
@@ -54,4 +54,4 @@ for _, row in tqdm(filtered_data.iterrows(), total=len(filtered_data), desc="Pro
     with open(analysis_set_file, "w", encoding="utf-8") as f:
         json.dump(analysis_set, f, indent=2, ensure_ascii=False)
 
-print(F"Total errors during the process: {errors_count}")
+print(F"Total errors during the process: {errors_count}/{len(filtered_data)}")
