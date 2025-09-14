@@ -30,9 +30,8 @@ def detect_faces(path: str) -> Dict:
             and abs(w_box - w) <= tolerance
             and abs(h_box - h) <= tolerance
         )
-        is_blank_face = np.sum(d["face"]) == 0  # all pixels are 0
 
-        if is_conf_zero and is_full_image and is_blank_face:
+        if is_conf_zero and is_full_image:
             continue  # skip fake face
 
         area = w_box * h_box
