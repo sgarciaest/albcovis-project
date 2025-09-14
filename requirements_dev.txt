@@ -1,5 +1,5 @@
 absl-py==2.3.1
--e git+https://github.com/sgarciaest/albcovis-project.git@267cd9de326f04ca4bfe6d3c44186b4ba60e9fff#egg=albcovis
+# -e git+https://github.com/sgarciaest/albcovis-project.git@267cd9de326f04ca4bfe6d3c44186b4ba60e9fff#egg=albcovis
 annotated-types==0.7.0
 asttokens==3.0.0
 astunparse==1.6.3
