@@ -4,6 +4,18 @@ import tempfile
 from pathlib import Path
 from PIL import Image
 
+import time
+from typing import Dict
+from PIL import Image
+
+from PIL import Image
+from typing import Dict
+
+from albcovis.utils.img import limit_image_size, pil_to_numpy01, rgb_to_gray
+from albcovis.services import color_extraction, texture_descriptors, face_detection, text_detection
+
+
+
 
 from albcovis.settings import settings
 from albcovis.services.musicbrainz import MusicBrainzClient, ensure_uuid
@@ -167,11 +179,6 @@ class CoverDataAggregator:
             cover_art=caa_front
         )
     
-    from PIL import Image
-    from typing import Dict
-
-    from albcovis.utils.img import limit_image_size, pil_to_numpy01, rgb_to_gray
-    from albcovis.services import color_extraction, texture_descriptors, face_detection, text_detection
 
     def extract_visual_features_from_cover(self, path: str) -> Dict:
         # Ensure path format is str and not Path
@@ -194,7 +201,7 @@ class CoverDataAggregator:
             "face_detection": fd,
             "text_detection": td
         }
-    
+   
     def get_rg_cover_data_visual_features(
         self, mbid: str, discogs_hint_id: Optional[str] = None
     ) -> CoverDataModel:
