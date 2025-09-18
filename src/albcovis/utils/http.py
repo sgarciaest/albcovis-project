@@ -1,10 +1,6 @@
-import logging
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-
-log = logging.getLogger("albcovis")
-log.setLevel(logging.INFO)
 
 def make_session(user_agent: str) -> requests.Session:
     s = requests.Session()
