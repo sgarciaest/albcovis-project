@@ -38,7 +38,7 @@ else:
     analysis_set = []
 
 # Build a set of already processed MBIDs to skip
-processed_mbids = {entry["mbid"] for entry in analysis_set if "mbid" in entry}
+processed_mbids = {entry["release_group_mbid"] for entry in analysis_set if "release_group_mbid" in entry}
 
 # Keep only unprocessed rows
 filtered_data = filtered_data[~filtered_data["mbid"].isin(processed_mbids)]
@@ -46,24 +46,38 @@ filtered_data = filtered_data[~filtered_data["mbid"].isin(processed_mbids)]
 # (Optional) Limit rows for testing
 # filtered_data = filtered_data.head(50)
 
-errors_count = 0
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-for _, row in tqdm(filtered_data.iterrows(), total=len(filtered_data), desc="Processing"):
+def process_row(row):
     mbid = row["mbid"]
     discogs_id = row["discogs_master_id"]
 
     try:
         result: CoverDataModel = agg.get_rg_cover_data_visual_features(mbid, discogs_id)
-        analysis_set.append(result.model_dump(mode="json"))
+        return {"success": True, "data": result.model_dump(mode="json")}
     except Exception as e:
-        print(f"Error processing mbid={mbid}, discogs_id={discogs_id}: {e}")
-        traceback.print_exc()
-        errors_count += 1
-        continue
+        return {"success": False, "error": str(e), "mbid": mbid, "discogs_id": discogs_id}
 
-    # Save progress incrementally
-    with open(analysis_set_file, "w", encoding="utf-8") as f:
-        json.dump(analysis_set, f, indent=2, ensure_ascii=False)
+
+errors_count = 0
+
+# ---- Parallel execution ----
+errors_count = 0
+
+with ThreadPoolExecutor(max_workers=4) as executor:  # adjust 3–5 depending on stability
+    futures = {executor.submit(process_row, row): row for _, row in filtered_data.iterrows()}
+
+    for future in tqdm(as_completed(futures), total=len(futures), desc="Processing"):
+        result = future.result()
+        if result["success"]:
+            analysis_set.append(result["data"])
+        else:
+            print(f"Error processing mbid={result['mbid']}, discogs_id={result['discogs_id']}: {result['error']}")
+            errors_count += 1
+
+        # Save progress incrementally
+        with open(analysis_set_file, "w", encoding="utf-8") as f:
+            json.dump(analysis_set, f, indent=2, ensure_ascii=False)
 
 print(f"Total errors during the process: {errors_count}/{len(filtered_data)}")
 print(f"Final dataset size: {len(analysis_set)}")

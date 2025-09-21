@@ -8,6 +8,8 @@ from albcovis.models.musicbrainz import (
     CoverArtResponse
 )
 
+from albcovis.utils.rate_limiter import mb_limiter
+
 
 def ensure_uuid(mbid: str) -> str:
     try:
@@ -28,6 +30,7 @@ class MusicBrainzClient:
         }
 
     def get_release_group(self, mbid: str) -> MusicBrainzReleaseGroup:
+        mb_limiter.wait()
         mbid = ensure_uuid(mbid)
         url = f"{self.BASE}/release-group/{mbid}"
         params = {
@@ -39,6 +42,7 @@ class MusicBrainzClient:
         return MusicBrainzReleaseGroup(**r.json())
 
     def get_release_group_cover_meta(self, mbid: str) -> CoverArtResponse:
+        mb_limiter.wait()
         mbid = ensure_uuid(mbid)
         url = f"{self.CAA}/release-group/{mbid}"
         r = self.s.get(url, headers=self.headers, timeout=15)

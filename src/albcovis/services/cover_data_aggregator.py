@@ -14,6 +14,9 @@ from typing import Dict
 from albcovis.utils.img import limit_image_size, pil_to_numpy01, rgb_to_gray
 from albcovis.services import color_extraction, texture_descriptors, face_detection, text_detection
 
+from albcovis.utils.rate_limiter import mb_limiter
+
+
 
 
 
@@ -217,7 +220,9 @@ class CoverDataAggregator:
 
         # Download image as a temporary file to process it
         with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
-            r = self.img_session.get(url, stream=True, timeout=60)
+            mb_limiter.wait()
+            # r = self.img_session.get(url, stream=True, timeout=60)
+            r = self.img_session.get(url, headers={"User-Agent": settings.user_agent, "Accept": "image/jpg"}, stream=True, timeout=60)
             r.raise_for_status()
             tmp.write(r.content)
             tmp.flush()

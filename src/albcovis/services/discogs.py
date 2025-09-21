@@ -5,6 +5,8 @@ from albcovis.utils.http import make_session
 from albcovis.settings import settings
 from albcovis.models.discogs import DiscogsRelease, DiscogsMaster
 
+from albcovis.utils.rate_limiter import dg_limiter
+
 
 def ensure_discogs_id(discogs_id: str | int) -> str:
     s = str(discogs_id)
@@ -76,11 +78,13 @@ class DiscogsClient:
     # --- Masterd and releases endpoint returning Pydantic models ---
 
     def get_master(self, master_id: str | int) -> DiscogsMaster:
+        dg_limiter.wait()
         r = self.s.get(f"{self.BASE}/masters/{ensure_discogs_id(master_id)}", headers=self.headers, timeout=20)
         r.raise_for_status()
         return DiscogsMaster(**r.json())
 
     def get_release(self, release_id: str | int) -> DiscogsRelease:
+        dg_limiter.wait()
         r = self.s.get(f"{self.BASE}/releases/{ensure_discogs_id(release_id)}", headers=self.headers, timeout=20)
         r.raise_for_status()
         return DiscogsRelease(**r.json())
