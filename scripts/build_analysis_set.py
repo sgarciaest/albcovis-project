@@ -59,10 +59,11 @@ def process_row(row):
         return {"success": False, "error": str(e), "mbid": mbid, "discogs_id": discogs_id}
 
 
-errors_count = 0
-
 # ---- Parallel execution ----
 errors_count = 0
+
+batch_size = 100
+processed = 0
 
 with ThreadPoolExecutor(max_workers=4) as executor:  # adjust 3–5 depending on stability
     futures = {executor.submit(process_row, row): row for _, row in filtered_data.iterrows()}
@@ -74,10 +75,12 @@ with ThreadPoolExecutor(max_workers=4) as executor:  # adjust 3–5 depending on
         else:
             print(f"Error processing mbid={result['mbid']}, discogs_id={result['discogs_id']}: {result['error']}")
             errors_count += 1
-
-        # Save progress incrementally
-        with open(analysis_set_file, "w", encoding="utf-8") as f:
-            json.dump(analysis_set, f, indent=2, ensure_ascii=False)
+        
+        processed += 1
+        # Save in batches to reduce I/O overhead
+        if processed % batch_size == 0:
+            with open(analysis_set_file, "w", encoding="utf-8") as f:
+                json.dump(analysis_set, f, indent=2, ensure_ascii=False)
 
 print(f"Total errors during the process: {errors_count}/{len(filtered_data)}")
 print(f"Final dataset size: {len(analysis_set)}")
