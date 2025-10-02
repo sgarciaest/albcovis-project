@@ -57,6 +57,38 @@ def compute_iou(box1, box2):
     return inter_area / (union + eps) if union > 0 else 0.0
 
 
+def extract_ap(coco_eval, iou_threshold, category_id=0):
+    iou_thrs = coco_eval.params.iouThrs
+    area_idx = coco_eval.params.areaRngLbl.index("all")
+    maxdet_idx = coco_eval.params.maxDets.index(100)
+
+    try:
+        iou_idx = np.where(np.isclose(iou_thrs, iou_threshold))[0][0]
+        cat_idx = coco_eval.params.catIds.index(category_id)
+    except (IndexError, ValueError):
+        return -1.0
+
+    precisions = coco_eval.eval['precision']
+    values = precisions[iou_idx, :, cat_idx, area_idx, maxdet_idx]
+    values = values[values > -1]
+    return np.mean(values) if values.size > 0 else -1.0
+
+def extract_ar(coco_eval, iou_threshold, category_id=0):
+    iou_thrs = coco_eval.params.iouThrs
+    area_idx = coco_eval.params.areaRngLbl.index("all")
+    maxdet_idx = coco_eval.params.maxDets.index(100)
+
+    try:
+        iou_idx = np.where(np.isclose(iou_thrs, iou_threshold))[0][0]
+        cat_idx = coco_eval.params.catIds.index(category_id)
+    except (IndexError, ValueError):
+        return -1.0
+
+    recalls = coco_eval.eval['recall']
+    value = recalls[iou_idx, cat_idx, area_idx, maxdet_idx]
+    return value if value > -1 else -1.0
+
+
 # ----------------- DEEPFACE DETECTION PHASE ---------------------------
 def generate_predictions_for_backend(images_dir, coco_gt_json, output_json_path, backend):
     print(f"\n🔍 Running DeepFace detection for backend: {backend}")
@@ -113,13 +145,24 @@ def run_coco_eval(ground_truth_json, category_id, prediction_json):
     coco_gt = COCO(ground_truth_json)
     coco_dt = coco_gt.loadRes(prediction_json)
     coco_eval = COCOeval(coco_gt, coco_dt, iouType='bbox')
+    coco_eval.params.iouThrs = np.linspace(0.1, 0.95, 18)  # includes 0.10, 0.30, 0.50
     coco_eval.params.catIds = [category_id]
     coco_eval.evaluate()
     coco_eval.accumulate()
     coco_eval.summarize()
 
-    metrics = coco_eval.stats.tolist()
-    return metrics  # list of 12 COCO metrics
+    ap_all = coco_eval.stats[0]  # AP@[0.10:0.95]
+    ap_010 = extract_ap(coco_eval, 0.10, category_id)
+    ap_030 = extract_ap(coco_eval, 0.30, category_id)
+    ap_050 = extract_ap(coco_eval, 0.50, category_id)
+
+    ar_all = coco_eval.stats[8]  # AR@[0.10:0.95] (from updated iouThrs)
+    ar_010 = extract_ar(coco_eval, 0.10, category_id)
+    ar_030 = extract_ar(coco_eval, 0.30, category_id)
+    ar_050 = extract_ar(coco_eval, 0.50, category_id)
+
+    return [ap_all, ap_010, ap_030, ap_050, ar_all, ar_010, ar_030, ar_050]
+
 
 # --------------------- VISUALIZATION PANEL ----------------------------
 def build_and_save_panel(path, all_detections):
@@ -201,12 +244,11 @@ if __name__ == "__main__":
         results.append([backend, mean_time] + metrics)
 
     # Save metrics summary
-    columns = ["backend", "mean_time"] + [
-        "AP@[IoU=0.50:0.95]",
-        "AP@0.50", "AP@0.75",
-        "AP_small", "AP_medium", "AP_large",
-        "AR@1", "AR@10", "AR@100",
-        "AR_small", "AR_medium", "AR_large"
+    columns = ["config", "mean_time"] + [
+        "AP@[IoU=0.10:0.95]",
+        "AP@0.10", "AP@0.30", "AP@0.50",
+        "AR@[IoU=0.10:0.95]",
+        "AR@0.10", "AR@0.30", "AR@0.50"
     ]
     df = pd.DataFrame(results, columns=columns)
     print("\n📊 Evaluation Summary:")
